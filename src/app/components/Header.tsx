@@ -6,21 +6,21 @@ import { FaUser } from "react-icons/fa";
 export default function Header() {
   return (
     <>
-      <nav className="flex   p-">
-        <div className="flex w-full items-center  bg-slate-500 m-3 p-3">
+      <nav className="flex">
+        <div className="flex w-full items-center  bg-slate-500 m-3 p-2">
           {/* logo */}
-          <div>
-            <FcCdLogo style={{ fontSize: "45px", color: "#fff" }} />
+          <div className="w-1/4">
+            <FcCdLogo style={{ fontSize: "45px", color: "#f2faf7" }} />
           </div>
-          <div>
-            <span>Products </span>
+          <div className="w-1/2 flex text-white  tipografia gap-6 justify-center items-center">
+            <span>Productos </span>
             <span>Blog </span>
-            <span>About us </span>
+            <span>Sobre nós </span>
           </div>
 
-          <div className="justify-center flex  items-center gap-2">
-            <FaUser style={{ fontSize: "30px", color: "#29271f" }} />
-            admin
+          <div className="justify-end flex w-1/3  cursor-pointer   items-center gap-1  text-white">
+            <FaUser style={{ fontSize: "28px", color: "#f2faf7" }} />
+            Admin
           </div>
         </div>
       </nav>

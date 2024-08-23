@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <Header />
 
-      {/* <div>HOME PRODUCTOS</div> */}
+      <div className="m-3 ">HOME PRODUCTOS</div>
       {/* <Footer /> */}
     </>
   );
