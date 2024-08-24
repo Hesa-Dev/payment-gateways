@@ -3,6 +3,7 @@ import Image from "next/image";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import { MdPayment } from "react-icons/md";
 import { IoEyeSharp } from "react-icons/io5";
+import PaginationItem from "./Pagination";
 
 export default function Card() {
   return (
@@ -39,6 +40,7 @@ export default function Card() {
           </div>
         </div>
       </div>
+      <PaginationItem itemsPerPage={6} />
     </>
   );
 }
