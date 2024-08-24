@@ -31,7 +31,7 @@ export default function Card() {
               Comprar
               <MdPayment />
             </div>
-            {/* ver */}
+            {/* ver produtos*/}
             <div className="flex flex-row border border-slate-400  gap-2 p-2 items-center justify-center  rounded-sm">
               Ver Produto
               <IoEyeSharp />
