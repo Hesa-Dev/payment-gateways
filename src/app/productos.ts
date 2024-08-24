@@ -1,5 +1,5 @@
 
-export const produtos: any = [
+ const produtos: any = [
     {
         id: "1",
         nome: "TechNova X1",
@@ -17,7 +17,7 @@ export const produtos: any = [
         preco: 100,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p2.webp",
+        image3: "/products/p2.webp",
         qtda: 1
     },
     {
@@ -27,7 +27,7 @@ export const produtos: any = [
         preco: 150,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p3.jpg",
+        image3: "/products/p3.jpg",
         qtda: 3
     },
     {
@@ -37,7 +37,7 @@ export const produtos: any = [
         preco: 200,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p4.jpg",
+        image3: "/products/p4.jpg",
         qtda: 3
     },
     {
@@ -47,7 +47,7 @@ export const produtos: any = [
         preco: 180,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p5.webp",
+        image3: "/products/p5.webp",
         qtda: 3
     },
     {
@@ -57,7 +57,7 @@ export const produtos: any = [
         preco: 145,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p6.jpg",
+        image3: "/products/p6.jpg",
         qtda: 3
     },
     {
@@ -67,7 +67,7 @@ export const produtos: any = [
         preco: 250,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p7.jpg",
+        image3: "/products/p7.jpg",
         qtda: 3
     },
     {
@@ -77,7 +77,7 @@ export const produtos: any = [
         preco: 170,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p8.png",
+        image3: "/products/p8.png",
         qtda: 3
     },
     {
@@ -87,7 +87,7 @@ export const produtos: any = [
         preco: 190,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p9.jpeg",
+        image3: "/products/p9.jpeg",
         qtda: 3
     },
     {
@@ -97,7 +97,19 @@ export const produtos: any = [
         preco: 195,
         image1: "https://exemplo.com/imagens/produto1.jpg",
         image2: "https://exemplo.com/imagens/produto1.jpg",
-        image3: "p10.jpg",
+        image3: "/products/p10.jpg",
         qtda: 3
     }
 ]
+
+export const teste : any  =[
+
+    {
+        name:"pedro",
+        age:"12"
+    }
+]
+
+export  const Name ="Honorio"
+
+export default produtos

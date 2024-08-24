@@ -8,6 +8,7 @@ import { FaChevronLeft } from "react-icons/fa";
 
 interface propsNumber {
   itemsPerPage: number;
+  product:[]
 }
 export default function PaginationItem(props: propsNumber) {
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -16,30 +17,37 @@ export default function PaginationItem(props: propsNumber) {
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + props.itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / props.itemsPerPage);
+  const currentItems = props.product?.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(props.product.length / props.itemsPerPage);
+
+  const handlePageClick = (event:any) => {
+    const newOffset = (event.selected * props.itemsPerPage) % props.product.length;
+    setItemOffset(newOffset);
+    console.log("teste onclick ")
+  };
 
   return (
-    <>
       <ReactPaginate
-        breakLabel={ <span className="mx-3">...</span>}
+        breakLabel={<span className="mx-3">...</span>}
         nextLabel={
           <span className="w-10 h-10 text-white bg-slate-600 gap-2 flex items-center justify-center">
-            <FaChevronRight/> 
+            <FaChevronRight />
           </span>
         }
-        // onPageChange={handlePageClick}
+        onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={300}
+        pageCount={pageCount}
         previousLabel={
           <span className="w-10 h-10 text-white bg-slate-600 gap-2 rounded-sm flex items-center justify-center">
-            <FaChevronLeft/>
+            <FaChevronLeft />
           </span>
         }
         renderOnZeroPageCount={null}
         containerClassName="flex items-center justify-center gap-3"
-        pageClassName="bg-slate-300 rounded-sm flex gap-3 w-10 h-10 hover:border-2 hover:border-black  items-center justify-center cursor-pointer"
+        pageClassName="bg-slate-300 rounded-sm flex gap-3 w-10 h-10 
+        hover:border-2 hover:border-black  items-center 
+        justify-center cursor-pointer"
+        activeClassName="bg-blue-400 text-white"
       />
-    </>
   );
 }
