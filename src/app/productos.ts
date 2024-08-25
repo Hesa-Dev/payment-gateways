@@ -102,14 +102,5 @@
     }
 ]
 
-export const teste : any  =[
-
-    {
-        name:"pedro",
-        age:"12"
-    }
-]
-
-export  const Name ="Honorio"
 
 export default produtos
