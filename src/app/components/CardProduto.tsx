@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import produtos from "../productos";
+import produtos , {carrinho} from "../productos";
 import ReactPaginate from "react-paginate";
 import Image from "next/image";
 import { RiShoppingCart2Fill } from "react-icons/ri";
@@ -10,6 +10,7 @@ import { IoEyeSharp } from "react-icons/io5";
 
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Card() {
   const [itemOffset, setItemOffset] = useState(0);
@@ -21,6 +22,16 @@ export default function Card() {
     const newOffset = (event.selected * totalPaginas) % produtos.length;
     setItemOffset(newOffset);
   };
+
+  const getProductById = (id: number): typeof produtos | undefined => {
+    return produtos.find((produto : typeof produtos) => produto.id === id);
+  };
+  
+  const addCarrinho = (index:number) : void =>{
+    console.log("index :. " , index);
+    //   carrinho.push (getProductById(index))
+      console.log( "produto encontrado :. " , getProductById(index) )
+  }
 
   return (
     <>
@@ -59,6 +70,7 @@ export default function Card() {
                   <div
                     className="flex lg:flex-row lg:text-base border  md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
                   items-center justify-center  rounded-sm md:p-1 md:gap-2 sm:text-xs md:text-xs"
+                  onClick={(event:any)=>addCarrinho(index)}
                   >
                     Adicionar
                     <RiShoppingCart2Fill />
@@ -72,13 +84,14 @@ export default function Card() {
                     <MdPayment />
                   </div>
                   {/* ver produtos*/}
-                  <div
-                    className="flex lg:flex-row lg:text-base border md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
+                  <Link
+                    href="produto" className="flex lg:flex-row lg:text-base border md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
                   items-center justify-center  rounded-sm md:p-1 md:gap-2 sm:text-xs md:text-xs"
                   >
-                    Ver Produto
-                    <IoEyeSharp />
-                  </div>
+                      Ver Produto
+                      <IoEyeSharp />
+                  </Link>
+
                 </div>
               </div>
             );

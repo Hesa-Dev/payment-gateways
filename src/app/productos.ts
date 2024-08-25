@@ -102,5 +102,7 @@
     }
 ]
 
+export const carrinho : any = [
+]
 
 export default produtos
