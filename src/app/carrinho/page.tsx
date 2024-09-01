@@ -7,6 +7,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CarrinhoContext";
 import Image from "next/image";
 import { RiDeleteBinFill } from "react-icons/ri";
+import  { imgPayment } from "../productos";
 
 export default function Carrinho() {
   // const [carrinho, setCarrinho] = useState(0);
@@ -48,11 +49,12 @@ export default function Carrinho() {
         ) : (
           <div className="flex flex-col justify-center  gap-2  items-center  w-1/2">
             {carrinho &&
-              carrinho.map(( item:any , index:number) => {
+              carrinho.map((item: any, index: number) => {
                 return (
                   <div
                     className="flex lg:flex-row  sm:flex-col md:flex-col justify-center  
-                rounded-md border-b-2 border-slate-400 w-full p-1 gap-2  " key={index}
+                rounded-md border-b-2 border-slate-400 w-full p-1 gap-2  "
+                    key={index}
                   >
                     <div className="border border-slate-400 rounded-md p-2">
                       <Image
@@ -105,6 +107,42 @@ export default function Carrinho() {
                   </div>
                 );
               })}
+
+            {/* Resumo  */}
+            <div className="flex  flex-row   w-full">
+              {/* metodos de pagamento  */}
+              <div className="flex flex-row justify-start w-1/2  p-2 gap-2 items-center">
+               
+                <p  className="font-bold text-sm text-slate-400">Formas de Pagamento</p>
+               { imgPayment&& imgPayment.map((image:any , id:number) =>{
+                return( 
+                <div className="flex flex-row gap-3 p-2" key={id}>
+                  <Image
+                        src={image.img}
+                          width={50}
+                          height={50}
+                          alt="web"
+                          //   priority={true}
+                          // layout="responsive"
+                        />
+                  </div>
+                  )
+               })}
+                
+              </div>
+              {/*  resumo da compras  */}
+              <div className="flex flex-col border  justify-end items-center w-1/2">
+
+                <div className="flex justify-end items-end w-full flex-col gap-2 p-2">
+                  <p>Total: {"€120"} </p>
+                  <p> Iva: 2%</p>
+                  <p>Transporte : €12</p>
+                  <span className="font-bold text-base border text-white
+                   bg-green-400 border-green-400 p-2 rounded-md w-1/2 h-8 flex 
+                   justify-center items-center cursor-pointer"> Comprar</span>
+                  </div>
+              </div>
+            </div>
           </div>
         )}
       </div>

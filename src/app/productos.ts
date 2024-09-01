@@ -1,5 +1,5 @@
 
- const produtos: any = [
+const produtos: any = [
     {
         id: "1",
         nome: "TechNova X1",
@@ -102,8 +102,37 @@
     }
 ]
 
-export const carrinho : any[] = [
-    
+export const carrinho: any[] = [
+
 ]
 
 export default produtos
+
+export const imgPayment: any = [
+    {
+        id: 1,
+        nome: "PayPal",
+        img: "/payment/paypal.png"
+    },
+    {
+        id: 2,
+        nome: "Mastercard",
+        img: "/payment/mastercd.svg"
+    },
+    {
+        id: 3,
+        nome: "Visa",
+        img: "/payment/visa.svg"
+    },
+    {
+        id: 4,
+        nome: "MultiBanco",
+        img: "/payment/mb.svg"
+    },
+    {
+        id: 5,
+        nome: "Mbway",
+        img: "/payment/mbway.svg"
+    },
+   
+]
