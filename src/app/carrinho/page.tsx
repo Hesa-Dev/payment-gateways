@@ -47,8 +47,9 @@ export default function Carrinho() {
           </div>
         ) : (
           <div className="flex flex-row justify-center   items-center  w-1/2">
-            <div className="flex flex-row justify-center  border-b-2 border-slate-400 w-full p-1">
-              <div className="border border-slate-400 rounded-sm p-2">
+            <div className="flex lg:flex-row  sm:flex-col md:flex-col justify-center  
+            rounded-md border-b-2 border-slate-400 w-full p-1  ">
+              <div className="border border-slate-400 rounded-md p-2">
                 <Image
                   src={"/products/p1.avif"}
                   width={150}
@@ -63,7 +64,7 @@ export default function Carrinho() {
                   TechNova X1
                 </p>
                 <p  className="font-bold text-sm text-slate-400">Em Stock</p>
-                <span  className="font-bold text-base p-2 text-slate-400 border">12</span>
+                <span  className="font-bold text-base p-2 rounded-md text-slate-600 border">12</span>
                 <span
                   className="border rounded-md p-2
                  bg-red-400 text-white cursor-pointer"
