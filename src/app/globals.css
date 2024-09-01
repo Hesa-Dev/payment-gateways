@@ -37,6 +37,16 @@ footer{
 
 }
 
+.inpt-number{
+
+  text-decoration: none;
+  border: 1px solid  #94a3b8;
+  outline: none;
+  background: none;
+  border-radius: 3px;
+  color: #686b70;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
