@@ -7,6 +7,7 @@ import { FaX } from "react-icons/fa6";
 import { MdMail } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Pagamento() {
   const [inputs, setInputs] = useState({
@@ -14,6 +15,35 @@ export default function Pagamento() {
     email: "",
     adress: "",
   });
+
+  const [tipoPGM, setTipoPGM] = useState("");
+  const [imgPayment, setImagePayment] = useState("");
+
+  const logoPayment = (evt: any) => {
+
+    evt.preventDefault();
+
+    const logoPAYMENT = evt.target.value;
+    if (logoPAYMENT) {
+      switch (logoPAYMENT) {
+        case "CARTAO":
+          setImagePayment("/payment/card.png");
+          break;
+        case "PAYPAL":
+          setImagePayment("/payment/paypal.png");
+          break;
+        case "MBWAY":
+          setImagePayment("/payment/mbway.svg");
+          break;
+        case "MB":
+          setImagePayment("/payment/mb.svg");
+          break;
+        default:
+          break;
+      }
+    }
+ 
+  };
 
   return (
     <>
@@ -104,18 +134,35 @@ export default function Pagamento() {
           </div>
           {/* metodo de pagamento  */}
           <div className="flex flex-col  w-full items-end border p-2 ">
-            <p className="flex w-full justify-end">
-              Escolha o metodo de Pagamento{" "}
+            <p className="flex w-full justify-end font-bold text-slate-600">
+              Escolha o Método de Pagamento
             </p>
-            <select className="w-full justify-end flex font-bold text-base">
+            <select
+              className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
+              onChange={(evt) => logoPayment(evt)}
+            >
               <option aria-readonly disabled>
                 FORMA DE PAGAMENTO
               </option>
-              <option>CARTAO</option>
-              <option>PAYPAL</option>
-              <option>MBWAY</option>
-              <option>MB</option>
+              <option value={"CARTAO"}>CARTAO</option>
+              <option value={"PAYPAL"}>PAYPAL</option>
+              <option value={"MBWAY"}>MBWAY</option>
+              <option value={"MB"}>MULTIBANCO</option>
             </select>
+
+            {/* LOGO PAYMENT */}
+            {imgPayment&& ( 
+              <div className="flex  justify-center w-full mt-2 p-2   items-center">
+                <Image
+                  src={imgPayment}
+                  width={100}
+                  height={50}
+                  alt="web"
+                  //   priority={true}
+                  // layout="responsive"
+                />
+              </div>
+            ) }
           </div>
         </div>
         {/* BOTAO DE PAGAMENTO */}

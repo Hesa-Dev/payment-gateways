@@ -65,7 +65,12 @@ footer{
   border-radius: 4px;
   border :solid 1px #4ade80
 }
+.inpt-select{
 
+  border :solid 1px #686b70;
+  border-radius: 3px;
+
+}
 .inpt-number{
 
   text-decoration: none;
