@@ -7,6 +7,7 @@ import Image from "next/image";
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import { MdPayment } from "react-icons/md";
 import { IoEyeSharp } from "react-icons/io5";
+import { destroyCookie, setCookie, parseCookies } from "nookies";
 
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
@@ -41,17 +42,17 @@ export default function Card() {
   // Funções para adicionar item no carrinho de compra
 
   const addCarrinho = (index: number): void => {
+
     if (productos[index]) {
 
       const novoItem = productos[index];
       addItemCarrinho(novoItem);
       console.log("item add :. ", novoItem);
-
     }
 
     if (carrinho?.length) {
-      console.log("total itens : ", carrinho.length);
-      console.log("produtos: ", carrinho);
+      // console.log("total itens : ", carrinho.length);
+      // console.log("produtos: ", carrinho);
     }
   };
   const addCarrinhoV1 = (index: number): void => {

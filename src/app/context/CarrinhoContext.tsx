@@ -9,6 +9,7 @@ import React, {
   useLayoutEffect,
 } from "react";
 import Carrinho from "../carrinho/page";
+import { destroyCookie, setCookie, parseCookies } from "nookies";
 
 type CartContextData = {
   carrinho?: Carrinho[] | undefined;
@@ -48,9 +49,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [carrinho, setCarrinho] = useState<Carrinho[]>([]);
 
   function addItem(itens: Carrinho) {
-
+    destroyCookie(null, 'totalCarrinho', { path: '/' })
     if (itens) {
       setCarrinho((prevProdutos) => [...prevProdutos, itens]);
+      
+      setCookie(undefined, 'totalCarrinho', carrinho?.length.toString(), {
+        maxAge: 60 * 60 * 24 * 30, // expira 1 mês   
+        path: "/"  // caminhos que terão acesso ao cookies
+      })
     //   console.log("info item:. ", itens);
     }
   }

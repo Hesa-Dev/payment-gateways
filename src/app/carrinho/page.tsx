@@ -7,15 +7,109 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CarrinhoContext";
 import Image from "next/image";
 import { RiDeleteBinFill } from "react-icons/ri";
-import  { imgPayment } from "../productos";
+import { imgPayment } from "../productos";
+import { parseCookies } from "nookies";
 
 export default function Carrinho() {
   // const [carrinho, setCarrinho] = useState(0);
   const { addItemCarrinho, carrinho, deletarItemCarrinho } =
     useContext(CartContext);
   const [totalItem, setTotalItem] = useState<number>(0);
+  const [stock, setStock] = useState<number>(4);
+  const [ArrayQtda, setArrayQtda] = useState<number[]>([]);
+  const [total, setTotal] = useState<number[]>([]);
+
+  const [indice, setIndice] = useState<number>(0); 
+  const [qtdade, setQtdade] = useState<number>(0); 
+
+
+  const setIDX = (evt: any , idx:number)=>{
+   
+    const qtda = parseInt(evt.target.value);
+
+    if (qtda) {
+      setIndice(idx)
+      setQtdade(qtda)
+      console.log("idx : " , idx);
+      // if (idx) {
+      //   setIndice(idx)
+      //   alert("indice : "  +  idx)
+      // }
+    }
+  }
+
+  const calcTotal = (idx:number):number =>{
+
+    if (idx) {
+      console.log("idx : " , idx);
+
+      if (carrinho?.length) {
+
+        const prod = carrinho[idx];
+        const valor = prod.preco;
+        return (qtdade*valor)
+      }
+      
+    }
+
+    return 0
+   
+  }
+
+  // const itemTotal = ()
+
+  const calculaTotal = (evt: any, idx: number) => {
+    // evt.preventDefault();
+    const qtda = parseInt(evt.target.value);
+    let numberToDigitArray: number[] = [];
+
+    let valorFinal = 0;
+
+    if (qtda) {
+      console.log("select  :. ", qtda);
+
+      if (carrinho?.length) {
+       
+
+        const prod = carrinho[idx];
+        const valor = prod.preco;
+
+        console.log("valor : " , valor);
+       
+        valorFinal = (qtda * valor);
+
+        console.log("valor final : " , valorFinal);
+        total.push(valorFinal)
+        // setTotal(total.push(valorFinal))
+
+        // setTotal(total.map(item =>
+        //   item === idx ? { item, idx: valorFinal } : item
+        // ));
+
+        setTotal([...total, idx, valorFinal]);
+        // setTotal((prevProdutos) => [...prevProdutos, valorFinal]);
+
+        console.log("valor final array  : " , total[idx]);
+
+        // numberToDigitArray.push(valorFinal);
+      }
+
+      // setTotal(numberToDigitArray)
+      // setTotal([...total, idx, valorFinal]);
+      // set
+
+      // if (valorFinal > 0) {
+      //   setTotal([...total, idx, valorFinal]);
+      //   console.log("valor : " , total[idx]);
+      // }
+    }
+
+  };
 
   useEffect(() => {
+    // const { 'totalCarrinho': itemTotal } = parseCookies();
+    // alert("item cookie : " +  itemTotal )
+
     const checkCarrinho = (): number => {
       if (carrinho?.length) {
         if (carrinho.length > 0) {
@@ -24,6 +118,24 @@ export default function Carrinho() {
       }
       return totalItem;
     };
+
+    const geraArrayQtdades = () => {
+      let numberToDigitArray: number[] = [];
+      // console.log(idx);
+
+      const stockDisponivel = stock;
+
+      for (let idx = 1; idx <= stockDisponivel; idx++) {
+        numberToDigitArray.push(idx);
+      }
+
+      //  Adicionar itens ao arrray
+      setArrayQtda([...ArrayQtda, ...numberToDigitArray]);
+
+      //  console.log("array qtdas :." , numArray.length);
+    };
+
+    geraArrayQtdades();
 
     checkCarrinho();
   }, []);
@@ -49,12 +161,12 @@ export default function Carrinho() {
         ) : (
           <div className="flex flex-col justify-center  gap-2  items-center  w-1/2">
             {carrinho &&
-              carrinho.map((item: any, index: number) => {
+              carrinho.map((item: any, idx: number) => {
                 return (
                   <div
                     className="flex lg:flex-row  sm:flex-col md:flex-col justify-center  
                 border-b-2 border-slate-400 w-full p-1 gap-2  "
-                    key={index}
+                    key={idx}
                   >
                     <div className="border border-slate-400 rounded-md p-2">
                       <Image
@@ -74,7 +186,7 @@ export default function Carrinho() {
                         Em Stock
                       </p>
                       <span className="font-bold text-base p-2 rounded-md text-slate-600 border">
-                        12
+                        {stock}
                       </span>
                       <span
                         className="border rounded-md p-2
@@ -89,19 +201,27 @@ export default function Carrinho() {
                         <span className="font-bold text-base text-slate-400">
                           Qtda
                         </span>
-                        <div>
-                          <input
-                            type="number"
-                            className="inpt-number"
-                            id="quantity"
-                            min="1"
-                            max="100"
-                          />
+                        <div >
+                          <select
+                          key={idx}
+                            className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
+                            onChange={(evt) => setIDX(evt, idx) }
+                            // onChange={(evt) => calculaTotal(evt, index) }
+                          >
+                            {ArrayQtda.map((number) => (
+                              <option key={number} value={number}>
+                                {number}
+                              </option>
+                            ))}
+                          </select>
                         </div>
 
-                        <span className="font-bold text-2xl text-slate-600">
-                          € 112.90
-                        </span>
+                         <span
+                         key={idx}
+                            className="font-bold text-2xl text-slate-600"
+                          > 
+                          € {indice==idx? ( calcTotal(idx)): ( item.preco)}
+                          </span>
                       </div>
                     </div>
                   </div>
@@ -112,34 +232,47 @@ export default function Carrinho() {
             <div className="flex  flex-row   w-full">
               {/* metodos de pagamento  */}
               <div className="flex flex-row justify-start w-1/2  p-2 gap-2 items-center">
-               
-                <p  className="font-bold text-sm text-slate-400">Formas de Pagamento</p>
-               { imgPayment&& imgPayment.map((image:any , id:number) =>{
-                return( 
-                <div className="flex flex-row gap-3 p-2" key={id}>
-                  <Image
-                        src={image.img}
+                <p className="font-bold text-sm text-slate-400">
+                  Formas de Pagamento
+                </p>
+                {imgPayment &&
+                  imgPayment.map((image: any, id: number) => {
+                    return (
+                      <div className="flex flex-row gap-3 p-2" key={id}>
+                        <Image
+                          src={image.img}
                           width={50}
                           height={50}
                           alt="web"
                           //   priority={true}
                           // layout="responsive"
                         />
-                  </div>
-                  )
-               })}
-                
+                      </div>
+                    );
+                  })}
               </div>
               {/*  resumo da compras  */}
               <div className="flex flex-col border  justify-end items-center w-1/2">
                 <div className="flex justify-end items-end w-full flex-col gap-2 p-2">
-                  <p >Total: <span className="font-extrabold  text-slate-600"> {"€120"}</span>  </p>
+                  <p>
+                    Total:{" "}
+                    <span className="font-extrabold  text-slate-600">
+                      {" "}
+                      {"€120"}
+                    </span>{" "}
+                  </p>
                   <p> IVA: 2%</p>
                   <p>Transporte : €12</p>
-                  <Link href={"payment"} className="font-bold text-base border text-white
+                  <Link
+                    href={"payment"}
+                    className="font-bold text-base border text-white
                    bg-green-400 border-green-400 p-2 rounded-md w-1/2 h-8 flex 
-                   justify-center items-center cursor-pointer"> Continuar</Link>
-                  </div>
+                   justify-center items-center cursor-pointer"
+                  >
+                    {" "}
+                    Continuar
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -18,6 +18,7 @@ export default function Pagamento() {
 
   const [tipoPGM, setTipoPGM] = useState("");
   const [imgPayment, setImagePayment] = useState("");
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const logoPayment = (evt: any) => {
 
@@ -166,13 +167,13 @@ export default function Pagamento() {
           </div>
         </div>
         {/* BOTAO DE PAGAMENTO */}
-        <div
+        <button
           className="flex justify-center items-center w-full mt-2
          btn-compra rounded-md   p-2 h-10 font-bold text-base"
-          
+         disabled={isDisabled} type="button" 
         >
           Finalizar Compra
-        </div>
+        </button>
       </div>
     </>
   );
