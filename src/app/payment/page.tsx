@@ -133,7 +133,7 @@ export default function Pagamento() {
             </span>
           </div>
           {/* metodo de pagamento  */}
-          <div className="flex flex-col  w-full items-end border p-2 ">
+          <div className="flex flex-col  w-full items-end border rounded-md p-2 ">
             <p className="flex w-full justify-end font-bold text-slate-600">
               Escolha o Método de Pagamento
             </p>
@@ -169,6 +169,7 @@ export default function Pagamento() {
         <div
           className="flex justify-center items-center w-full mt-2
          btn-compra rounded-md   p-2 h-10 font-bold text-base"
+          
         >
           Finalizar Compra
         </div>
