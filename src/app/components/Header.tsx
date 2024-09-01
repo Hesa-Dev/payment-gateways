@@ -1,11 +1,18 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { FcCdLogo } from "react-icons/fc";
 import { FaUser } from "react-icons/fa";
 import { PiTidalLogoBold } from "react-icons/pi";
 import { RiShoppingCart2Fill } from "react-icons/ri";
+import React, { useContext, useEffect, useState } from "react";
+import { CartContext } from "../context/CarrinhoContext";
 
 export default function Header() {
+
+  // const { carrinho } = useContext(CartContext);
+  const { addItemCarrinho, carrinho } = useContext(CartContext);
   return (
     <>
       <nav className="flex">
@@ -28,7 +35,9 @@ export default function Header() {
               <RiShoppingCart2Fill
                 style={{ fontSize: "20px", color: "#f2faf7" }}
               />
-              <span   className="font-bold">(1)</span> Carrinho
+              <span   className="font-bold">
+                 ( {carrinho?.length? carrinho.length :0 } )
+                </span> Carrinho
             </Link>
           </div>
         </div>

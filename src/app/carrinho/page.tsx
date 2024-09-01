@@ -3,12 +3,14 @@
 import Link from "next/link";
 import Header from "../components/Header";
 import { IoStorefrontSharp } from "react-icons/io5";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { CartContext } from "../context/CarrinhoContext";
 
 
 export default function Produto() {
 
-  const [carrinho, setCarrinho] = useState(0);
+  // const [carrinho, setCarrinho] = useState(0);
+  const { addItemCarrinho, carrinho , deletarItemCarrinho } = useContext(CartContext);
   return (
     <>
     <Header/>

@@ -102,7 +102,8 @@
     }
 ]
 
-export const carrinho : any = [
+export const carrinho : any[] = [
+    
 ]
 
 export default produtos

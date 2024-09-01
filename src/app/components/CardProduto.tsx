@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import produtos , {carrinho} from "../productos";
+import React, { useEffect, useState, useContext } from "react";
+import produtos, { carrinho } from "../productos";
 import ReactPaginate from "react-paginate";
 import Image from "next/image";
 import { RiShoppingCart2Fill } from "react-icons/ri";
@@ -11,6 +11,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
+import { CartContext } from "../context/CarrinhoContext";
 
 export default function Card() {
   const [itemOffset, setItemOffset] = useState(0);
@@ -18,20 +19,72 @@ export default function Card() {
   const endOffset = itemOffset + totalPaginas;
   const currentItems = produtos.slice(itemOffset, endOffset);
 
+  const { addItemCarrinho, carrinho } = useContext(CartContext);
+
+  const [productos] = useState<(typeof produtos)[]>(produtos);
+
+  // const [carrinho, setCarrinho] = useState<typeof produtos[]>([]);
+
   const handlePageChange = (event: any) => {
     const newOffset = (event.selected * totalPaginas) % produtos.length;
     setItemOffset(newOffset);
   };
 
-  const getProductById = (id: number): typeof produtos | undefined => {
-    return produtos.find((produto : typeof produtos) => produto.id === id);
+  // Funções para carrinho de compra
+  //   const getProductById = (id: number): typeof produtos | undefined => {
+  //     return productos.find((produto : typeof produtos) => produto.id === id);
+
+  //   };
+
+  const getProductByIdV2 = (id: number) => {};
+
+  // Funções para adicionar item no carrinho de compra
+
+  const addCarrinho = (index: number): void => {
+    if (productos[index]) {
+
+      const novoItem = productos[index];
+      addItemCarrinho(novoItem);
+      console.log("item add :. ", novoItem);
+
+    }
+
+    if (carrinho?.length) {
+      console.log("total itens : ", carrinho.length);
+      console.log("produtos: ", carrinho);
+    }
   };
-  
-  const addCarrinho = (index:number) : void =>{
-    console.log("index :. " , index);
-    //   carrinho.push (getProductById(index))
-      console.log( "produto encontrado :. " , getProductById(index) )
-  }
+  const addCarrinhoV1 = (index: number): void => {
+    if (productos[index]) {
+      const novoItem = productos[index];
+      // carrinho.push(novoItem)
+
+      // carrinho.push(novoItem)
+
+      // console.log("productos[] : " , productos[index]);
+      // setCarrinho([...productos.slice(0, index) , novoItem, ...productos.slice(index+1)])
+      // setCarrinho([...novoItem.slice(0,index)])
+    }
+
+    // console.log("item carrinho :. " , carrinho[index]);
+
+    // if (carrinho) {
+
+    //   console.log("total item carrinho : " , carrinho.length);
+
+    //   carrinho.map((item:any)=>{
+    //     console.log("produtos nome :. " , item.nome);
+    //   })
+    // }
+
+    // console.log("index :. " , index);
+    //   carrinho.push (getProductById(index))  set (...productos, products[0] )
+
+    //   console.log("carrinho check : " , carrinho.length);
+    //   const intem  =  carrinho.find((carrinhos : typeof carrinho) => carrinhos.index === index)
+    //   console.log("itens carrinho : " , carrinho );
+    //   console.log( "produto encontrado :. " , getProductById(index) )
+  };
 
   return (
     <>
@@ -70,7 +123,7 @@ export default function Card() {
                   <div
                     className="flex lg:flex-row lg:text-base border  md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
                   items-center justify-center  rounded-sm md:p-1 md:gap-2 sm:text-xs md:text-xs"
-                  onClick={(event:any)=>addCarrinho(index)}
+                    onClick={() => addCarrinho(index)}
                   >
                     Adicionar
                     <RiShoppingCart2Fill />
@@ -85,13 +138,13 @@ export default function Card() {
                   </div>
                   {/* ver produtos*/}
                   <Link
-                    href="produto" className="flex lg:flex-row lg:text-base border md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
+                    href="produto"
+                    className="flex lg:flex-row lg:text-base border md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
                   items-center justify-center  rounded-sm md:p-1 md:gap-2 sm:text-xs md:text-xs"
                   >
-                      Ver Produto
-                      <IoEyeSharp />
+                    Ver Produto
+                    <IoEyeSharp />
                   </Link>
-
                 </div>
               </div>
             );
