@@ -53,7 +53,7 @@ export default function Carrinho() {
                 return (
                   <div
                     className="flex lg:flex-row  sm:flex-col md:flex-col justify-center  
-                rounded-md border-b-2 border-slate-400 w-full p-1 gap-2  "
+                border-b-2 border-slate-400 w-full p-1 gap-2  "
                     key={index}
                   >
                     <div className="border border-slate-400 rounded-md p-2">
@@ -132,14 +132,13 @@ export default function Carrinho() {
               </div>
               {/*  resumo da compras  */}
               <div className="flex flex-col border  justify-end items-center w-1/2">
-
                 <div className="flex justify-end items-end w-full flex-col gap-2 p-2">
-                  <p>Total: {"€120"} </p>
-                  <p> Iva: 2%</p>
+                  <p >Total: <span className="font-extrabold  text-slate-600"> {"€120"}</span>  </p>
+                  <p> IVA: 2%</p>
                   <p>Transporte : €12</p>
-                  <span className="font-bold text-base border text-white
+                  <Link href={"payment"} className="font-bold text-base border text-white
                    bg-green-400 border-green-400 p-2 rounded-md w-1/2 h-8 flex 
-                   justify-center items-center cursor-pointer"> Comprar</span>
+                   justify-center items-center cursor-pointer"> Continuar</Link>
                   </div>
               </div>
             </div>

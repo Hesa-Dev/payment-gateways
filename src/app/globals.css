@@ -27,14 +27,43 @@ font-weight: 500;
 font-style: normal;
 }
 
-header{
+.minhasCores{
 
+  color: #64748b ;
 
 }
 
 footer{
 
 
+}
+
+.bx-inpt-txt{
+
+  color: #64748b;
+  /* background: whitesmoke;    rgb(100 116 139 / var(--tw-bg-opacity))*/
+  border-radius: 6px;
+  border-bottom: 2px solid  #64748b;
+  /* background-color:#64748b */
+}
+
+.inpt-txt {
+  text-decoration: none;
+  outline: none;
+  background: none;
+}
+.btn-compra {
+  background: #4ade80 ;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-compra:hover{
+  background: white ;
+  color: #4ade80;
+  cursor: pointer;
+  border-radius: 4px;
+  border :solid 1px #4ade80
 }
 
 .inpt-number{
