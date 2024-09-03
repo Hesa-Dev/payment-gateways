@@ -13,7 +13,8 @@ import { CompraContext } from "../context/CompraContext";
 
 export default function Carrinho() {
   // const [carrinho, setCarrinho] = useState(0);
-  const { addItemCarrinho, carrinho, deletarItemCarrinho } = useContext(CartContext);
+  const { addItemCarrinho, carrinho, deletarItemCarrinho } =
+    useContext(CartContext);
   const { addResumo, deterResumo, resumoCompra } = useContext(CompraContext);
 
   const [totalItem, setTotalItem] = useState(carrinho?.length);
@@ -21,51 +22,55 @@ export default function Carrinho() {
   const [ArrayQtda, setArrayQtda] = useState<number[]>([]);
   const [total, setTotal] = useState<number[]>([]);
 
-  const [indice, setIndice] = useState<number>(0);
-  const [qtdade, setQtdade] = useState<number>(0);
+  const [price, setPrice] = useState<number[]>([]);
+  // const [qtdade, setQtdade] = useState<number>(0);
 
   const apagarItemCarrinho = async (idx: number) => {
-
-     if (idx) {
-
-      alert(idx)
-      const response = await deletarItemCarrinho(idx);
-
-      console.log( "idx apagar ... ", response,   " total item :. ",
-        carrinho?.length
-     
-      );
-
-      return
-     }
-    
-   
-  };
-
-  const setIDX = (evt: any, idx: number) => {
-    const qtda = parseInt(evt.target.value);
-
-    if (qtda) {
-      setIndice(idx);
-      setQtdade(qtda);
-      console.log("idx : ", idx);
-      // if (idx) {
-      //   setIndice(idx)
-      //   alert("indice : "  +  idx)
-      // }
+    if (idx >= 0) {
+      deletarItemCarrinho(idx);
+      return;
     }
   };
 
-  const calcTotal = (idx: number): number => {
-    if (idx) {
-      console.log("idx : ", idx);
+  const testeEvent = ( idx:number ,evt:any) => {
 
-      if (carrinho?.length) {
-        const prod = carrinho[idx];
-        const valor = prod.preco;
-        return qtdade * valor;
+    alert(evt.target.value)
+    alert("id " +  idx)
+    console.log("id " ,  idx);
+
+  }
+
+
+  const calcTotal = (idx: number, evt: any) => {
+
+    if (typeof idx!==undefined) {
+
+      alert("id : " + idx)
+
+      // if (idx >= 0) {
+        const qtda = parseInt(evt&&evt.target.value);
+        console.log("idx : ", idx, "evt :", qtda);
+
+        if (carrinho?.length) {
+          const prod = carrinho[idx].preco;
+          const total = prod * qtda;
+
+          alert("total : " + total)
+
+
+          // console.log("total_preco : ", total);
+          // price?.push(total)
+
+          setPrice([...price , idx , total])
+
+          // setPrice(price?.push(total))
+
+          // return total;
+        // }
+
       }
     }
+
     return 0;
   };
 
@@ -218,10 +223,10 @@ export default function Carrinho() {
                         </span>
                         <div>
                           <select
-                            key={idx}
+                          key={idx}
                             className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
-                            onChange={(evt) => setIDX(evt, item.id)}
-                            // onChange={(evt) => calculaTotal(evt, index) }
+                            // onChange={(evt) => setIDX(evt, item.id)}
+                            onChange={(evt) => calcTotal(idx, evt)}
                           >
                             {ArrayQtda.map((number) => (
                               <option key={number} value={number}>
@@ -235,7 +240,10 @@ export default function Carrinho() {
                           key={idx}
                           className="font-bold text-2xl text-slate-600"
                         >
-                          € {indice == idx ? calcTotal(item.id) : item.preco}
+                          €
+                          {price.indexOf(price[idx]) == idx
+                            ? price[idx]
+                            : item.preco}
                         </span>
                       </div>
                     </div>
