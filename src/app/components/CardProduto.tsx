@@ -15,6 +15,7 @@ import Link from "next/link";
 import { CartContext } from "../context/CarrinhoContext";
 
 export default function Card() {
+  
   const [itemOffset, setItemOffset] = useState(0);
   const totalPaginas = Math.ceil(produtos.length / 2);
   const endOffset = itemOffset + totalPaginas;

@@ -9,52 +9,65 @@ import Image from "next/image";
 import { RiDeleteBinFill } from "react-icons/ri";
 import { imgPayment } from "../productos";
 import { parseCookies } from "nookies";
+import { CompraContext } from "../context/CompraContext";
 
 export default function Carrinho() {
   // const [carrinho, setCarrinho] = useState(0);
-  const { addItemCarrinho, carrinho, deletarItemCarrinho } =
-    useContext(CartContext);
-  const [totalItem, setTotalItem] = useState<number>(0);
+  const { addItemCarrinho, carrinho, deletarItemCarrinho } = useContext(CartContext);
+  const { addResumo, deterResumo, resumoCompra } = useContext(CompraContext);
+
+  const [totalItem, setTotalItem] = useState(carrinho?.length);
   const [stock, setStock] = useState<number>(4);
   const [ArrayQtda, setArrayQtda] = useState<number[]>([]);
   const [total, setTotal] = useState<number[]>([]);
 
-  const [indice, setIndice] = useState<number>(0); 
-  const [qtdade, setQtdade] = useState<number>(0); 
+  const [indice, setIndice] = useState<number>(0);
+  const [qtdade, setQtdade] = useState<number>(0);
 
+  const apagarItemCarrinho = async (idx: number) => {
 
-  const setIDX = (evt: any , idx:number)=>{
+     if (idx) {
+
+      alert(idx)
+      const response = await deletarItemCarrinho(idx);
+
+      console.log( "idx apagar ... ", response,   " total item :. ",
+        carrinho?.length
+     
+      );
+
+      return
+     }
+    
    
+  };
+
+  const setIDX = (evt: any, idx: number) => {
     const qtda = parseInt(evt.target.value);
 
     if (qtda) {
-      setIndice(idx)
-      setQtdade(qtda)
-      console.log("idx : " , idx);
+      setIndice(idx);
+      setQtdade(qtda);
+      console.log("idx : ", idx);
       // if (idx) {
       //   setIndice(idx)
       //   alert("indice : "  +  idx)
       // }
     }
-  }
+  };
 
-  const calcTotal = (idx:number):number =>{
-
+  const calcTotal = (idx: number): number => {
     if (idx) {
-      console.log("idx : " , idx);
+      console.log("idx : ", idx);
 
       if (carrinho?.length) {
-
         const prod = carrinho[idx];
         const valor = prod.preco;
-        return (qtdade*valor)
+        return qtdade * valor;
       }
-      
     }
-
-    return 0
-   
-  }
+    return 0;
+  };
 
   // const itemTotal = ()
 
@@ -69,17 +82,15 @@ export default function Carrinho() {
       console.log("select  :. ", qtda);
 
       if (carrinho?.length) {
-       
-
         const prod = carrinho[idx];
         const valor = prod.preco;
 
-        console.log("valor : " , valor);
-       
-        valorFinal = (qtda * valor);
+        console.log("valor : ", valor);
 
-        console.log("valor final : " , valorFinal);
-        total.push(valorFinal)
+        valorFinal = qtda * valor;
+
+        console.log("valor final : ", valorFinal);
+        total.push(valorFinal);
         // setTotal(total.push(valorFinal))
 
         // setTotal(total.map(item =>
@@ -89,7 +100,7 @@ export default function Carrinho() {
         setTotal([...total, idx, valorFinal]);
         // setTotal((prevProdutos) => [...prevProdutos, valorFinal]);
 
-        console.log("valor final array  : " , total[idx]);
+        console.log("valor final array  : ", total[idx]);
 
         // numberToDigitArray.push(valorFinal);
       }
@@ -103,20 +114,18 @@ export default function Carrinho() {
       //   console.log("valor : " , total[idx]);
       // }
     }
-
   };
 
   useEffect(() => {
     // const { 'totalCarrinho': itemTotal } = parseCookies();
     // alert("item cookie : " +  itemTotal )
 
-    const checkCarrinho = (): number => {
+    const checkCarrinho = () => {
       if (carrinho?.length) {
         if (carrinho.length > 0) {
           setTotalItem(carrinho.length);
         }
       }
-      return totalItem;
     };
 
     const geraArrayQtdades = () => {
@@ -178,7 +187,11 @@ export default function Carrinho() {
                         // layout="responsive"
                       />
                     </div>
-                    <div className="flex flex-col items-center justify-center  p-2 gap-2  w-1/4">
+                    {/*  deletar | stock */}
+                    <div
+                      key={idx}
+                      className="flex flex-col items-center justify-center  p-2 gap-2  w-1/4"
+                    >
                       <p className="font-bold text-2xl text-slate-400">
                         {item.nome}
                       </p>
@@ -188,9 +201,11 @@ export default function Carrinho() {
                       <span className="font-bold text-base p-2 rounded-md text-slate-600 border">
                         {stock}
                       </span>
+                      {/* btn deletar */}
                       <span
                         className="border rounded-md p-2
                      bg-red-400 text-white cursor-pointer"
+                        onClick={(evt) => apagarItemCarrinho(item.id)}
                       >
                         <RiDeleteBinFill className="w-7 h-7" />
                       </span>
@@ -201,11 +216,11 @@ export default function Carrinho() {
                         <span className="font-bold text-base text-slate-400">
                           Qtda
                         </span>
-                        <div >
+                        <div>
                           <select
-                          key={idx}
+                            key={idx}
                             className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
-                            onChange={(evt) => setIDX(evt, idx) }
+                            onChange={(evt) => setIDX(evt, item.id)}
                             // onChange={(evt) => calculaTotal(evt, index) }
                           >
                             {ArrayQtda.map((number) => (
@@ -216,12 +231,12 @@ export default function Carrinho() {
                           </select>
                         </div>
 
-                         <span
-                         key={idx}
-                            className="font-bold text-2xl text-slate-600"
-                          > 
-                          € {indice==idx? ( calcTotal(idx)): ( item.preco)}
-                          </span>
+                        <span
+                          key={idx}
+                          className="font-bold text-2xl text-slate-600"
+                        >
+                          € {indice == idx ? calcTotal(item.id) : item.preco}
+                        </span>
                       </div>
                     </div>
                   </div>

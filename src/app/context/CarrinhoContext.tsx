@@ -8,6 +8,7 @@ import React, {
   useState,
   useLayoutEffect,
 } from "react";
+
 import Carrinho from "../carrinho/page";
 import { destroyCookie, setCookie, parseCookies } from "nookies";
 
@@ -49,23 +50,36 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [carrinho, setCarrinho] = useState<Carrinho[]>([]);
 
   function addItem(itens: Carrinho) {
-    destroyCookie(null, 'totalCarrinho', { path: '/' })
+    destroyCookie(null, "totalCarrinho", { path: "/" });
+
     if (itens) {
       setCarrinho((prevProdutos) => [...prevProdutos, itens]);
-      
-      setCookie(undefined, 'totalCarrinho', carrinho?.length.toString(), {
-        maxAge: 60 * 60 * 24 * 30, // expira 1 mês   
-        path: "/"  // caminhos que terão acesso ao cookies
-      })
-    //   console.log("info item:. ", itens);
+
+      setCookie(undefined, "totalCarrinho", carrinho?.length.toString(), {
+        maxAge: 60 * 60 * 24 * 30, // expira 1 mês
+        path: "/", // caminhos que terão acesso ao cookies
+      });
+      //   console.log("info item:. ", itens);
     }
   }
 
-  function deletarItem(id: number) {}
+  function deletarItem(id: number) {
+
+    if (carrinho.length) {
+      if (carrinho.length > 0) {
+        setCarrinho(carrinho.filter((item) => item.id !== id));
+      }
+    }
+ 
+  }
 
   return (
     <CartContext.Provider
-      value={{ addItemCarrinho: addItem, deletarItemCarrinho: deletarItem, carrinho }}
+      value={{
+        addItemCarrinho: addItem,
+        deletarItemCarrinho: deletarItem,
+        carrinho,
+      }}
     >
       {children}
     </CartContext.Provider>

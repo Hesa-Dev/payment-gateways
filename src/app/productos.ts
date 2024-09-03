@@ -1,7 +1,7 @@
 
 const produtos: any = [
     {
-        id: "1",
+        id: 0,
         nome: "TechNova X1",
         descricao: "Smartphone XYZ com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 89,
@@ -11,7 +11,7 @@ const produtos: any = [
         qtda: 1
     },
     {
-        id: "2",
+        id: 1,
         nome: "PixelWave 12",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 100,
@@ -21,7 +21,7 @@ const produtos: any = [
         qtda: 1
     },
     {
-        id: "3",
+        id: 2,
         nome: "UltraZon S5",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 150,
@@ -31,7 +31,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "4",
+        id: 3,
         nome: "NexusPrime 8 PRO",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 200,
@@ -41,7 +41,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "5",
+        id: 4,
         nome: "HyperBlade  G9",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 180,
@@ -51,7 +51,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "6",
+        id: 5,
         nome: "AeroMax  Q7",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 145,
@@ -61,7 +61,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "7",
+        id: 6,
         nome: "QuantumVolt  R3",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 250,
@@ -71,7 +71,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "8",
+        id: 7,
         nome: "InfinityCore  V10",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 170,
@@ -81,7 +81,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "9",
+        id: 8,
         nome: "SpectraOne  Z6",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 190,
@@ -91,7 +91,7 @@ const produtos: any = [
         qtda: 3
     },
     {
-        id: "10",
+        id: 9,
         nome: "FusionEdge  P4",
         descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
         preco: 195,

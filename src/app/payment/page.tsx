@@ -6,10 +6,16 @@ import { FaUser } from "react-icons/fa";
 import { FaX } from "react-icons/fa6";
 import { MdMail } from "react-icons/md";
 import { MdLocationOn } from "react-icons/md";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Image from "next/image";
+import { CompraContext } from "../context/CompraContext";
+
+
 
 export default function Pagamento() {
+
+  const { addCompra, deletarCompra , compra } =  useContext(CompraContext);
+ 
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
