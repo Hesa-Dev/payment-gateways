@@ -16,6 +16,11 @@ class ProdutoController {
 
     }
 
+    async update() {
+
+        return ""
+    }
+
     async getAll() {
         return ""
     }
