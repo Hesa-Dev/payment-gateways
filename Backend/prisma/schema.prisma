@@ -4,6 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+//  criar migration na database | persistir tabela na base de dados 
+//  npx prisma migrate dev 
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,8 +17,61 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id    Int    @id @default(autoincrement())
   name  String
-  email String  @unique
-  tipo String  
+  email String @unique
+  password String 
+  tipo  String
+
+  @@map("users")
 }
+
+model Produto {
+  id          Int       @id @default(autoincrement())
+  name        String  @unique
+  description String
+  price       Float
+  qtdade      Int
+  createdAt   String
+  // categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  // categoriaId Int
+  image       String
+
+  @@map("produtos")
+}
+
+model Categoria {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  // produtos Produto[]
+  image String?
+
+   @@map("categorias")
+}
+
+model Venda {
+  id          Int      @id @default(autoincrement())
+  createdAt   String 
+  // clienteId   Int
+  userId      Int?
+  iva         Float? // Campo que pode ser nulo 
+  transport   Float?
+  payment     String
+  description String
+  // cliente   Cliente @relation(fields: [clienteId], references: [id])
+
+  @@map("vendas")
+}
+
+model Cliente {
+  id        Int      @id @default(autoincrement())
+  name      String   // Nome obrigatório
+  email     String   @unique // Email obrigatório e único
+  phone  String?  // Telefone opcional
+  adress   String 
+  createdAt String// Data de criação com valor padrão
+  // venda Venda[]
+
+  @@map("clientes")
+}
+
