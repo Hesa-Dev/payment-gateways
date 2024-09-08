@@ -86,3 +86,15 @@ footer{
     text-wrap: balance;
   }
 }
+
+/* *******************ADMIN ******************* */
+
+.bx-cards {
+
+  background-color: rgb(90, 116, 140);
+  border-radius: 3px;
+  border:solid 1px rgb(138, 149, 122);
+  font-weight: bold;
+  font-size: 18;
+
+}

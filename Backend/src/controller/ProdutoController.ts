@@ -6,32 +6,38 @@ import { Request, Response } from "express";
 
 class ProdutoController {
 
+    private  produtoS = new ProdutoService() 
+
     async add(req: Request, res: Response) {
 
-        const produto = new ProdutoService()
         const { name, description, price, qtdade, image } = req.body
-
-        const sender  = await produto.add({ name, description, price, qtdade, image }) 
+        const sender  = await this.produtoS.add({ name, description, price, qtdade, image }) 
         return res.json(sender)
 
     }
 
-    async update() {
+    async update(req: Request, res: Response) {
 
-        return ""
+        const { name, description, price, qtdade, image , id  } = req.body
+        const sender  = await this.produtoS.update({ name, description, price, qtdade, image ,id}) 
+
+        return res.json(sender)
     }
 
-    async getAll() {
-        return ""
+    async getAll(req: Request, res: Response) {
+
+        const sender  = await this.produtoS.getAll() 
+        return res.json(sender)
     }
 
-    async edit() {
+    async delete(req: Request, res: Response) {
 
-        return ""
-    }
-    async delete() {
+        const produtoService = new ProdutoService();
 
-        return ""
+        const { id  } = req.body
+        const sender = produtoService.delete(id)
+        // const sender  = await this.produtoS.delete(id) 
+        return res.json(sender)
     }
 
 }

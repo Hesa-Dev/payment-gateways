@@ -23,10 +23,10 @@ router.post('/client/edit',  new ClientController().edit)
 router.post('/client/delete',  new ClientController().delete)
 
 // *******************PRODUTO ******************* //
-router.post('/produto',  new ProdutoController().getAll)
+router.get('/produto',  new ProdutoController().getAll)
 router.post('/produto/add',  new ProdutoController().add)
-router.post('/produto/edit',  new ProdutoController().edit)
-router.post('/produto/delete',  new ProdutoController().delete)
+router.post('/produto/edit',  new ProdutoController().update)
+router.delete('/produto/delete',  new ProdutoController().delete)
 
 // *******************VENDA ******************* //
 router.post('/venda',  new UserController().getAll)

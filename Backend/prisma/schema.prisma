@@ -34,7 +34,8 @@ model Produto {
   description String
   price       Float
   qtdade      Int
-  createdAt   String
+  createdAt   String?
+  updatedAt String?
   // categoria   Categoria @relation(fields: [categoriaId], references: [id])
   // categoriaId Int
   image       String
