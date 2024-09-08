@@ -61,6 +61,10 @@ model Venda {
   transport   Float?
   payment     String
   description String
+  total    Float
+  name String?
+  email String ?
+  adress  String?
   // cliente   Cliente @relation(fields: [clienteId], references: [id])
 
   @@map("vendas")

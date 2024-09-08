@@ -18,7 +18,7 @@ export default function HeaderAdmin() {
         <div className="flex w-full items-center  bg-slate-500 m-3 p-2">
           {/* logo */}
           <Link
-            href={"/"}
+            href={"/admin"}
             className="w-1/4   flex justify-start items-center gap-1"
           >
             {/* <FcCdLogo style={{ fontSize: "45px", color: "#f2faf7" }} /> */}

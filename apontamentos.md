@@ -17,3 +17,9 @@ https://youtrack.jetbrains.com/issue/WEB-58314/Modules-from-prisma-client-are-no
 solucão :.  instalar prisma client | #npm install @prisma/client
             gerar prisma cliente | # npx prisma generate
 
+# react-data-table-component | instalação 
+https://react-data-table-component.netlify.app/?path=/docs/getting-started-examples--docs
+
+instalacao # npm install react-data-table-component 
+
+
