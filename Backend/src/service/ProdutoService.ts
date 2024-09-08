@@ -1,6 +1,7 @@
 
-import { PrismaClient } from "@prisma/client";
-import { Produto } from "@prisma/client"
+// import {PrismaClient}  from "@prisma/client"
+import {PrismaClient} from "@prisma/client"
+// import { Produto } from "@prisma/client"
 import dataTime from "../utils/utils";
 
 
@@ -23,7 +24,7 @@ class ProdutoService {
                 where:{name:produto.name}
             })
 
-            if(prodName){
+            if(!prodName){
 
                 const prod = await this.prismaclient.produto.create({
                     data: {
