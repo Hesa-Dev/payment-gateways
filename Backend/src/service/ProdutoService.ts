@@ -11,7 +11,8 @@ interface ProdutoProps {
     description: String,
     price: number,
     qtdade: number
-    image: String
+    image: String,
+    category?: string
 }
 export class ProdutoService {
 
@@ -34,6 +35,7 @@ export class ProdutoService {
                         qtdade: produto.qtdade,
                         description: produto.description?.toString(),
                         image: produto.image?.toString(),
+                        category: produto.category?.toString(),
                         createdAt: dataTime()
                     }
                 })
@@ -102,6 +104,7 @@ export class ProdutoService {
 
         const produtos = await this.prismaclient.produto.findMany({
             select: {
+                id:true,
                 name: true,
                 price: true,
                 qtdade: true,

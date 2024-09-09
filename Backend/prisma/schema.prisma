@@ -36,6 +36,7 @@ model Produto {
   qtdade      Int
   createdAt   String?
   updatedAt String?
+  category String?
   // categoria   Categoria @relation(fields: [categoriaId], references: [id])
   // categoriaId Int
   image       String

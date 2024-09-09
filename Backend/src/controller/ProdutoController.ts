@@ -10,8 +10,10 @@ class ProdutoController {
 
     async add(req: Request, res: Response) {
 
-        const { name, description, price, qtdade, image } = req.body
-        const sender  = await this.produtoS.add({ name, description, price, qtdade, image }) 
+        const produtoService = new ProdutoService();
+
+        const { name, description, price, qtdade, image,category } = req.body
+        const sender  = await produtoService.add({ name, description, price, qtdade, image,category }) 
         return res.json(sender)
 
     }
@@ -26,7 +28,9 @@ class ProdutoController {
 
     async getAll(req: Request, res: Response) {
 
-        const sender  = await this.produtoS.getAll() 
+        const produtoService = new ProdutoService();
+
+        const sender  = await produtoService.getAll() 
         return res.json(sender)
     }
 
