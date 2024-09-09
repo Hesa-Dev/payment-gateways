@@ -7,10 +7,12 @@ import { FaUser } from "react-icons/fa";
 import { FaChartPie } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import DataTable, { defaultThemes } from "react-data-table-component";
+import { FaArrowRightLong } from "react-icons/fa6";
 import produtos from "../productos";
 import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import setupApiClient from "../api/axios";
 import { FaX } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function Admin() {
   const customStyle = {
@@ -104,16 +106,15 @@ export default function Admin() {
   };
 
   const cleanInput = () => {
-
-    if (search.length>0) {
-      setSearch("")
-      loadTable()
+    if (search.length > 0) {
+      setSearch("");
+      loadTable();
     }
-    if (search.length==0) {
-        setSearch("")
-        loadTable()
+    if (search.length == 0) {
+      setSearch("");
+      loadTable();
     }
-}
+  };
 
   useEffect(() => {
     loadTable();
@@ -129,7 +130,13 @@ export default function Admin() {
         <div className="flex border gap-2 justify-center">
           {/* card produto */}
           <div className="bx-cards text-white  w-1/3 justify-center flex flex-col items-center">
-            <AiFillProduct className="w-16 h-20" />
+            <Link
+              href={"/admin/produto"}
+              className="flex w-full  justify-end  p-1 "
+            >
+              <FaArrowRightLong className="bx-circle" />
+            </Link>
+            <AiFillProduct className="w-16 h-20 " />
             PRODUTOS
             {/* FOOTER */}
             <div className="flex  p-2 gap-2 justify-center items-center">
@@ -140,6 +147,12 @@ export default function Admin() {
 
           {/* card USER */}
           <div className="bx-cards text-white  w-1/3 justify-center flex flex-col items-center">
+            <Link
+              href={"/admin/user"}
+              className="flex w-full  justify-end  p-1 "
+            >
+              <FaArrowRightLong className="bx-circle" />
+            </Link>
             <FaUser className="w-16 h-20" />
             UTILIZADORES
             {/* FOOTER */}
@@ -151,6 +164,12 @@ export default function Admin() {
           </div>
           {/* card VENDAS */}
           <div className="bx-cards text-white  w-1/3 justify-center flex flex-col items-center">
+            <Link
+              href={"/admin/venda"}
+              className="flex w-full  justify-end  p-1 "
+            >
+              <FaArrowRightLong className="bx-circle" />
+            </Link>
             <FaChartPie className="w-16 h-20" />
             VENDAS
             {/* FOOTER */}
@@ -162,10 +181,9 @@ export default function Admin() {
         </div>
         {/* tabela  */}
         <div className=" flex flex-col rounded-sm border-slate-400 justify-center w-full p-2 mt-3 gap-2  border ">
-
           <div className="flex flex-row justify-center items-center  w-full gap-2">
             {/*  inpt pesquisa | remover  */}
-            <div className="flex justify-center items-center gap-2 w-full border p-1">
+            <div className="flex justify-center items-center  rounded-sm gap-2 w-full border border-slate-400 p-1">
               <input
                 type="text"
                 placeholder="Pesquisar vendas"
@@ -179,8 +197,11 @@ export default function Admin() {
               </span>
             </div>
             {/* btn pesquisa  */}
-            <div className="flex  w-8 justify-end gap-1 border p-2 cursor-pointer">
-              <IoSearch onClick={handleSearch}   className="text-slate-600 font-extrabold"/>
+            <div className="flex  w-8 justify-end gap-1 border p-2 cursor-pointer rounded-sm  border-slate-400">
+              <IoSearch
+                onClick={handleSearch}
+                className="text-slate-600 font-extrabold"
+              />
             </div>
           </div>
           <DataTable

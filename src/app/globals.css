@@ -98,3 +98,13 @@ footer{
   font-size: 18;
 
 }
+
+.bx-circle{
+  border-radius: 30px;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  padding: 4px;
+  cursor: pointer;
+  color: rgb(90, 116, 140);
+}
