@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client"
 import dataTime from "../utils/utils";
 
 
-interface ProdutoReq {
+interface ProdutoProps {
     id?: number
     name: string,
     description: String,
@@ -17,7 +17,7 @@ export class ProdutoService {
 
     private prismaclient = new PrismaClient();
 
-    async add(produto: ProdutoReq) {
+    async add(produto: ProdutoProps) {
 
         if (produto) {
             // verificar se nome do produto ja existe 
@@ -47,7 +47,7 @@ export class ProdutoService {
         throw new Error("CAMPOS VAZIOS");
 
     }
-    async update(produto: ProdutoReq) {
+    async update(produto: ProdutoProps) {
 
         if (produto.id) {
             // verificar se id do produto  

@@ -2,6 +2,9 @@ import { Router } from "express";
 import { ProdutoController } from "./controller/ProdutoController";
 import { UserController } from "./controller/UserController";
 import { ClientController } from "./controller/ClientController";
+import { VendaController } from "./controller/VendaController";
+
+
 
 
 const router = Router();
@@ -29,9 +32,9 @@ router.post('/produto/edit',  new ProdutoController().update)
 router.delete('/produto/delete',  new ProdutoController().delete)
 
 // *******************VENDA ******************* //
-router.post('/venda',  new UserController().getAll)
-router.post('/venda/add',  new UserController().add)
-router.post('/venda/edit',  new UserController().edit)
-router.post('/venda/delete',  new UserController().delete)
+router.get('/venda',  new VendaController().getAll)
+router.post('/venda/add',  new VendaController().add)
+router.post('/venda/edit',  new VendaController().update)
+router.delete('/venda/delete',  new VendaController().delete)
 
 export { router };

@@ -1,12 +1,16 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import HeaderAdmin from "./components/Header";
 import { AiFillProduct } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { FaChartPie } from "react-icons/fa";
+import { IoSearch } from "react-icons/io5";
 import DataTable, { defaultThemes } from "react-data-table-component";
 import produtos from "../productos";
+import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
+import setupApiClient from "../api/axios";
+import { FaX } from "react-icons/fa6";
 
 export default function Admin() {
   const customStyle = {
@@ -30,30 +34,26 @@ export default function Admin() {
       selector: (row: any) => row.name,
       sortable: true,
     },
-    {
-      name: "E-mail",
-      selector: (row: any) => row.email,
-      sortable: true,
-    },
+
     {
       name: "Descricao",
-      selector: (row: any) => row.phone,
+      selector: (row: any) => row.description,
       sortable: true,
     },
 
     {
       name: "Tipo Pagamento",
-      selector: (row: any) => row.nif,
+      selector: (row: any) => row.payment,
       sortable: true,
     },
     {
       name: "Total",
-      selector: (row: any) => row.nif,
+      selector: (row: any) => row.total,
       sortable: true,
     },
     {
       name: "Data",
-      selector: (row: any) => row.nif,
+      selector: (row: any) => row.createdAt,
       sortable: true,
     },
 
@@ -68,6 +68,58 @@ export default function Admin() {
       ),
     },
   ];
+
+  const api = setupApiClient();
+  const [vendas, setVendas] = useState<any>([]);
+  const [search, setSearch] = useState<any>("");
+  const [filteredData, setFilteredData] = useState<any[]>([]);
+
+  async function loadTable() {
+    try {
+      api
+        .get("/venda/")
+        .then((response) => {
+          setVendas(response.data);
+          console.log("tbl vendas :", response.data);
+        })
+        .catch((error) => {
+          console.log("error api ", error);
+        });
+    } catch (error) {
+      console.log("error:. ", error);
+    }
+  }
+
+  const handleSearch = () => {
+    if (search) {
+      console.log("no filter");
+      const filteredItems = vendas.filter(
+        (item: any) =>
+          item.name.toLowerCase().includes(search.toLowerCase()) ||
+          item.payment.toLowerCase().includes(search.toLowerCase()) ||
+          item.createdAt.toLowerCase().includes(search.toLowerCase())
+      );
+      setVendas(filteredItems);
+    }
+  };
+
+  const cleanInput = () => {
+
+    if (search.length>0) {
+      setSearch("")
+      loadTable()
+    }
+    if (search.length==0) {
+        setSearch("")
+        loadTable()
+    }
+}
+
+  useEffect(() => {
+    loadTable();
+    // setIsClient(true);
+    setFilteredData(vendas);
+  }, []);
 
   return (
     <>
@@ -110,9 +162,30 @@ export default function Admin() {
         </div>
         {/* tabela  */}
         <div className=" flex flex-col rounded-sm border-slate-400 justify-center w-full p-2 mt-3 gap-2  border ">
+
+          <div className="flex flex-row justify-center items-center  w-full gap-2">
+            {/*  inpt pesquisa | remover  */}
+            <div className="flex justify-center items-center gap-2 w-full border p-1">
+              <input
+                type="text"
+                placeholder="Pesquisar vendas"
+                value={search}
+                className="inpt-txt w-full text-slate-600"
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              {/* remove */}
+              <span className="cursor-pointer flex w-1/12 justify-end">
+                <FaX className="text-slate-600 " onClick={cleanInput} />
+              </span>
+            </div>
+            {/* btn pesquisa  */}
+            <div className="flex  w-8 justify-end gap-1 border p-2 cursor-pointer">
+              <IoSearch onClick={handleSearch}   className="text-slate-600 font-extrabold"/>
+            </div>
+          </div>
           <DataTable
             columns={cl_vendas}
-            data={produtos}
+            data={vendas}
             customStyles={customStyle}
             pagination={true}
             paginationPerPage={5}

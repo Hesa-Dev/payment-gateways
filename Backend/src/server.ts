@@ -4,7 +4,7 @@ import { router } from "./router";
 
 const cors = require('cors');
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5000;
 
 // Middleware para interpretar dados JSON
 app.use(cors());

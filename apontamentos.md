@@ -1,3 +1,17 @@
+# links do projecto
+
+http://localhost:3000/admin
+
+http://localhost:3000/payment
+
+http://localhost:3000/
+
+http://localhost:3000/carrinho
+
+
+
+
+
 # Paginacão de Item 
 https://www.youtube.com/watch?v=GWsS2eYFZOk
 https://www.npmjs.com/package/react-paginate
