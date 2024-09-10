@@ -10,7 +10,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../context/CarrinhoContext";
 
 export default function Header() {
-
   // const { carrinho } = useContext(CartContext);
   const { carrinho } = useContext(CartContext);
   return (
@@ -23,21 +22,30 @@ export default function Header() {
             <PiTidalLogoBold style={{ fontSize: "45px", color: "#f2e1f1" }} />
           </Link>
           <div className="w-1/2 flex text-white  tipografia gap-6 justify-center items-center">
-            <Link href={"/"} className="cursor-pointer font-bold">Productos </Link>
+            <Link href={"/"} className="cursor-pointer font-bold">
+              Productos{" "}
+            </Link>
             <span className="cursor-pointer font-bold">Blog </span>
             <span className="cursor-pointer font-bold">Sobre nós</span>
           </div>
 
           <div className="justify-end flex w-1/3  cursor-pointer   items-center gap-1 text-base text-white">
-            <FaUser style={{ fontSize: "18px", color: "#f2faf7" }} />
-            Minha Área
-            <Link  href={"carrinho"} className="flex justify-center items-center ml-2 gap-1">
+            <Link className="flex w-1/4 gap-2" href={"/admin/"}>
+              <FaUser style={{ fontSize: "18px", color: "#f2faf7" }} />
+              Minha Área
+            </Link>
+
+            <Link
+              href={"carrinho"}
+              className="flex justify-center items-center ml-2 gap-1"
+            >
               <RiShoppingCart2Fill
                 style={{ fontSize: "20px", color: "#f2faf7" }}
               />
-              <span   className="font-bold">
-                 ( {carrinho?.length? carrinho.length : 0 } )
-                </span> Carrinho
+              <span className="font-bold">
+                ( {carrinho?.length ? carrinho.length : 0} )
+              </span>{" "}
+              Carrinho
             </Link>
           </div>
         </div>

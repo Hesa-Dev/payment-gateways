@@ -30,6 +30,7 @@ router.get('/produto',  new ProdutoController().getAll)
 router.post('/produto/add',  new ProdutoController().add)
 router.post('/produto/edit',  new ProdutoController().update)
 router.delete('/produto/delete',  new ProdutoController().delete)
+router.get('/produto/id',  new ProdutoController().getProdutoByID)
 
 // *******************VENDA ******************* //
 router.get('/venda',  new VendaController().getAll)

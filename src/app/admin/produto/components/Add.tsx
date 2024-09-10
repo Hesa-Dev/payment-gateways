@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { AiFillProduct } from "react-icons/ai";
 import { FaUser, FaX } from "react-icons/fa6";
 import { MdLocationOn, MdMail } from "react-icons/md";
+import { LuText } from "react-icons/lu";
+import { GrMoney } from "react-icons/gr";
+import { GoNumber } from "react-icons/go";
+import { IoImages } from "react-icons/io5";
+import { ProdutoContext } from "@/app/context/ProdutoContext";
 
 interface closeBox {
   isClose: (tipo: any) => void;
@@ -11,21 +16,78 @@ interface closeBox {
 }
 
 export default function ADD(props: closeBox) {
+  const { add, produto } = useContext(ProdutoContext);
+
   const [inputs, setInputs] = useState({
-    name: "",
-    email: "",
-    adress: "",
-    nif: "",
-    tipo: "normal",
-    morada: "",
-    phone: "",
-    data: "",
+    designacao: "",
+    qtdade: "",
+    category: "",
+    description: "",
+    price: "",
+    image: "",
   });
+  const [selectedFile, setSelectedFile] = useState(null);
   const [boxOpen, setBoxOpen] = useState({
     add: false,
     edit: false,
     arg: true,
   });
+
+  const handleAdd = async (e: any) => {
+    e.preventDefault();
+
+    const client_clean = {
+      designacao: "",
+      qtdade: "",
+      category: "",
+      description: "",
+      price: "",
+      image: "",
+    };
+
+    if (inputs) {
+      
+      var cat = inputs.category;
+
+      if (inputs.category == undefined || inputs.category == "") {
+        cat = "Smartphone";
+      }
+
+      const client: any = {
+        name: inputs.designacao,
+        description: inputs.description,
+        price: parseFloat(inputs.price),
+        qtdade: parseFloat(inputs.qtdade),
+        category: cat,
+        image: inputs.image,
+      };
+
+      if (selectedFile) {
+        await add(client);
+        props.loadTbl();
+        setInputs(client_clean);
+      }
+    }
+
+    console.log(
+      inputs.image,
+      " ",
+      inputs.designacao,
+      " ",
+      inputs.category,
+      " ",
+      inputs.price,
+      "",
+      inputs.qtdade,
+      "",
+      inputs.description
+    );
+  };
+
+  const handleFileChange = (event: any) => {
+    setSelectedFile(event.target.files[0]);
+    setInputs({ ...inputs, image: event.target.files[0].name });
+  };
 
   return (
     <>
@@ -45,7 +107,11 @@ export default function ADD(props: closeBox) {
         </div>
 
         {/* Formulario */}
-        <form action="" className="flex flex-col w-full gap-2">
+        <form
+          action=""
+          onSubmit={(e: any) => handleAdd(e)}
+          className="flex flex-col w-full gap-2"
+        >
           {/* NOME */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
             <span className="inpt-label flex flex-row lg:w-1/6 md:h-1/4 justify-start items-center gap-1">
@@ -55,115 +121,131 @@ export default function ADD(props: closeBox) {
             <input
               type="text"
               className="inpt-txt lg:w-full"
-              value={inputs.name}
-              onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
+              value={inputs.designacao}
+              onChange={(e) =>
+                setInputs({ ...inputs, designacao: e.target.value })
+              }
               required
             />
             {/* remove */}
             <span className="cursor-pointer flex w-1/12 justify-end">
-              <FaX onClick={() => setInputs({ ...inputs, name: "" })} />
+              <FaX onClick={() => setInputs({ ...inputs, designacao: "" })} />
             </span>
           </div>
-          {/* EMAIL |    CONTACTO*/}
-          <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
-            <span className="inpt-label flex flex-row lg:w-1/4 md:h-1/4 justify-start items-center gap-1">
-              <MdMail />
-              Descrição *
+          {/* Descrição*/}
+          <div className="flex flex-col w-full gap-2 bx-inpt-txt  items-center p-2">
+            <span className="inpt-label flex w-full justify-start items-center gap-1">
+              <LuText />
+              Descrição
+              {/* remove */}
+              <span className="cursor-pointer flex w-full gap-2 justify-end">
+                <FaX
+                  onClick={() => setInputs({ ...inputs, description: "" })}
+                />
+              </span>
             </span>
-            <input
-              type="text"
+            <textarea
               className="inpt-txt lg:w-full"
-              value={inputs.email}
-              onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+              rows={4}
+              cols={4}
+              value={inputs.description}
+              onChange={(e) =>
+                setInputs({ ...inputs, description: e.target.value })
+              }
               required
             />
-            {/* remove */}
-            <span className="cursor-pointer flex w-1/12 justify-end">
-              <FaX onClick={() => setInputs({ ...inputs, email: "" })} />
-            </span>
           </div>
-          <div></div>
-          {/* ENDEREÇO */}
+          {/* Categoria */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
-            <span className="inpt-label flex flex-row lg:w-1/6 md:h-1/4 justify-start items-center gap-1">
-              <MdLocationOn />
-              Adress *
-            </span>
-            <input
-              type="text"
-              className="inpt-txt lg:w-full"
-              value={inputs.adress}
-              onChange={(e) => setInputs({ ...inputs, adress: e.target.value })}
-              required
-            />
-            {/* remove */}
-            <span className="cursor-pointer flex w-1/12 justify-end">
-              <FaX onClick={() => setInputs({ ...inputs, adress: "" })} />
-            </span>
+            <select
+              name="selectedFruit"
+              className="inpt-select  font-semibold w-full"
+              onChange={(e) =>
+                setInputs({ ...inputs, category: e.target.value })
+              }
+            >
+              <option value="web" aria-readonly disabled>
+                Selecionar Categoria
+              </option>
+              <option value="Smartphone">Smartphone</option>
+              <option value="Computadores">Computadores</option>
+              <option value="acessorios">Acessorios Informatica</option>
+            </select>
           </div>
-          {/* DESCRICAO */}
+          {/* IMAGE */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
-            <span className="inpt-label flex flex-row lg:w-1/6 md:h-1/4 justify-start items-center gap-1">
-              <MdLocationOn />
-              Adress *
-            </span>
-            <input
-              type="text"
-              className="inpt-txt lg:w-full"
-              value={inputs.adress}
-              onChange={(e) => setInputs({ ...inputs, adress: e.target.value })}
-              required
-            />
+            <label
+              id="myfile"
+              className="inpt-label flex flex-row lg:w-full md:h-1/4 justify-start items-center gap-1"
+            >
+              <IoImages />
+              Image *
+              <input
+                type="file"
+                id="myfile"
+                className="inpt-txt lg:w-full"
+                onChange={(event) => handleFileChange(event)}
+                // onChange={(e) =>
+                //   setInputs({ ...inputs, image: e.target.value })
+                // }
+                required
+              />
+            </label>
+
             {/* remove */}
             <span className="cursor-pointer flex w-1/12 justify-end">
-              <FaX onClick={() => setInputs({ ...inputs, adress: "" })} />
+              <FaX onClick={() => setInputs({ ...inputs, image: "" })} />
             </span>
           </div>
           {/* PREÇO | QTDADE */}
           <div className="flex flex-row w-full gap-2   items-center p-2">
             {/* PRECO */}
             <div className="flex w-full items-center bx-inpt-txt ">
-              <span className="inpt-label flex flex-row lg:w-1/4 md:h-1/4 justify-start items-center gap-1">
-                <MdLocationOn />
+              <span className="inpt-label flex flex-row lg:w-1/2  p-2 md:h-1/4 justify-start items-center gap-1">
+                <GrMoney />
                 Preço *
               </span>
               <input
-                type="text"
+                type="number"
                 className="inpt-txt lg:w-full"
-                value={inputs.adress}
+                min={1}
                 onChange={(e) =>
-                  setInputs({ ...inputs, adress: e.target.value })
+                  setInputs({ ...inputs, price: e.target.value })
                 }
                 required
               />
               {/* remove */}
               <span className="cursor-pointer flex w-1/12 justify-end">
-                <FaX onClick={() => setInputs({ ...inputs, adress: "" })} />
+                <FaX onClick={() => setInputs({ ...inputs, price: "" })} />
               </span>
             </div>
             {/* qtdade */}
-            <div  className="flex w-full items-center bx-inpt-txt " >
-              <span className="inpt-label flex flex-row lg:w-1/4 md:h-1/4 justify-start items-center gap-1">
-                <MdLocationOn />
+            <div className="flex w-full items-center bx-inpt-txt p-2">
+              <span className="inpt-label flex flex-row lg:w-1/2 md:h-1/4 justify-start items-center gap-1">
+                <GoNumber />
                 Qtdade *
               </span>
               <input
-                type="text"
+                type="number"
                 className="inpt-txt lg:w-full"
-                value={inputs.adress}
+                value={inputs.qtdade}
                 onChange={(e) =>
-                  setInputs({ ...inputs, adress: e.target.value })
+                  setInputs({ ...inputs, qtdade: e.target.value })
                 }
                 required
               />
               {/* remove */}
               <span className="cursor-pointer flex w-1/12 justify-end">
-                <FaX onClick={() => setInputs({ ...inputs, adress: "" })} />
+                <FaX onClick={() => setInputs({ ...inputs, qtdade: "" })} />
               </span>
             </div>
           </div>
 
-          {/* IMAGE */}
+          {/* btn add  */}
+          <button type="submit" className="w-full p-2 btn-add">
+            {" "}
+            Registar Produto
+          </button>
         </form>
       </div>
     </>

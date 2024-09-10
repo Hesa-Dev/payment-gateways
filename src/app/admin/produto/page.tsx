@@ -16,9 +16,12 @@ import EDIT from "./components/Edit";
 
 export default function Produto() {
   const api = setupApiClient();
+
   const [produtos, setProdutos] = useState<any>([]);
   const [search, setSearch] = useState<any>("");
   const [filteredData, setFilteredData] = useState<any[]>([]);
+
+  const [prodID, setProdID] = useState<number>();
   const [boxOpen, setBoxOpen] = useState({
     add: false,
     edit: false,
@@ -26,6 +29,7 @@ export default function Produto() {
   });
 
   const isClose = (type: string): void => {
+   
     if (type === "add") {
       setBoxOpen({ ...boxOpen, add: false });
       loadTable();
@@ -36,17 +40,20 @@ export default function Produto() {
   };
 
   const isOpen = (type: string, id?: number) => {
+
+    // alert("type :   " + type)
     switch (type) {
       case "add":
         if (boxOpen.add === false) {
-          setBoxOpen({ ...boxOpen, add: true });
+          setBoxOpen({ ...boxOpen, add: true , edit:false});
           return;
         }
         break;
       default:
         if (boxOpen.edit == false) {
-          // setIdUser(id)
-          setBoxOpen({ ...boxOpen, edit: true });
+         
+          setBoxOpen({ ...boxOpen, edit: true  , add:false  });
+          setProdID(id)
           return;
         }
         break;
@@ -59,7 +66,6 @@ export default function Produto() {
         .get("/produto")
         .then((response) => {
           setProdutos(response.data);
-          console.log("tbl produtos :", response.data);
         })
         .catch((error) => {
           console.log("error api ", error);
@@ -104,7 +110,7 @@ export default function Produto() {
     },
     {
       name: "Qtdade",
-      selector: (row: any) => row.total,
+      selector: (row: any) => row.qtdade,
       sortable: true,
     },
     {
@@ -118,7 +124,9 @@ export default function Produto() {
       // selector: (row: any) => row.accao,
       cell: (row: any) => (
         <div className="flex flex-row gap-2 justify-center p-2">
-          <button className=" flex w-9 rounded-sm h-10 border  text-yellow-400 p-2 justify-center items-center">
+          <button 
+          className=" flex w-9 rounded-sm h-10 border  text-yellow-400 p-2 justify-center items-center"
+          onClick={() => isOpen("edit", row.id)}>
             <MdModeEdit />
           </button>
 
@@ -207,6 +215,7 @@ export default function Produto() {
         {/* formularios  | novo cliente*/}
         {boxOpen.add == true && <ADD isClose={isClose} loadTbl={loadTable} />}
         {/* EDIT PRODUTO */}
+        {boxOpen.edit == true && <EDIT isClose={isClose} loadTbl={loadTable} produtoId={prodID} />}
       </div>
     </>
   );

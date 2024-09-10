@@ -9,6 +9,7 @@ import { RiShoppingCart2Fill } from "react-icons/ri";
 import { IoLogOut } from "react-icons/io5";
 import React, { useContext, useEffect, useState } from "react";
 import { RiAdminFill } from "react-icons/ri";
+import { HiShoppingBag } from "react-icons/hi2";
 
 export default function HeaderAdmin() {
   // const { carrinho } = useContext(CartContext);
@@ -27,8 +28,12 @@ export default function HeaderAdmin() {
           </Link>
 
           <div className="justify-end   flex w-full  cursor-pointer items-center gap-3 text-base text-white">
+            <Link href={"/"} className="flex justify-center items-center gap-1">
+              <HiShoppingBag  style={{ fontSize: "25px", }} />
+             Loja
+            </Link>
             <div className="flex justify-center items-center gap-1">
-              <FaUser  className="w-5 h-8"  />
+              <FaUser className="w-5 h-8" />
               Minha Área
             </div>
 

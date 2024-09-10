@@ -99,7 +99,57 @@ const produtos: any = [
         image2: "https://exemplo.com/imagens/produto1.jpg",
         image3: "/products/p10.jpg",
         qtda: 3
-    }
+    },
+    {
+        id: 10,
+        nome: "NexusPrime 8 PRO",
+        descricao: "Smartphone ABC com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
+        preco: 200,
+        image1: "https://exemplo.com/imagens/produto1.jpg",
+        image2: "https://exemplo.com/imagens/produto1.jpg",
+        image3: "/products/p4.jpg",
+        qtda: 3
+    },
+    {
+        id: 11,
+        nome: "Dell",
+        descricao: "Inspiron 15  Intel Core i7 512GB SSD com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
+        preco: 1200,
+        image1: "https://exemplo.com/imagens/produto1.jpg",
+        image2: "https://exemplo.com/imagens/produto1.jpg",
+        image3: "/products/p4.jpg",
+        qtda: 3
+    },
+    {
+        id: 12,
+        nome: "Inspiron 15",
+        descricao: " DELL Inspiron 15  Intel Core i7 512GB SSD com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
+        preco: 1200,
+        image1: "https://exemplo.com/imagens/produto1.jpg",
+        image2: "https://exemplo.com/imagens/produto1.jpg",
+        image3: "/products/p4.jpg",
+        qtda: 3
+    },
+    {
+        id: 13,
+        nome: "MacBook Pro",
+        descricao: " APLLE MacBook Pro   Intel Core i7 512GB SSD com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
+        preco: 1200,
+        image1: "https://exemplo.com/imagens/produto1.jpg",
+        image2: "https://exemplo.com/imagens/produto1.jpg",
+        image3: "/products/p4.jpg",
+        qtda: 3
+    },
+    {
+        id: 14,
+        nome: "ThinkPad X1 Carbon",
+        descricao: " DELL Inspiron 15  Intel Core i7 512GB SSD com 128GB de armazenamento, tela de 6.5 polegadas e câmera de 48MP.",
+        preco: 890,
+        image1: "https://exemplo.com/imagens/produto1.jpg",
+        image2: "https://exemplo.com/imagens/produto1.jpg",
+        image3: "/products/p4.jpg",
+        qtda: 3
+    },
 ]
 
 export const carrinho: any[] = [

@@ -17,7 +17,7 @@ export default function Pagamento() {
   const { addCompra, deletarCompra , compra } =  useContext(CompraContext);
  
   const [inputs, setInputs] = useState({
-    name: "",
+    designacao: "",
     email: "",
     adress: "",
   });
@@ -71,12 +71,12 @@ export default function Pagamento() {
               type="text"
               className="inpt-txt lg:w-full"
               value={inputs.name}
-              onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
+              onChange={(e) => setInputs({ ...inputs, designacao: e.target.value })}
               required
             />
             {/* remove */}
             <span className="cursor-pointer flex w-1/12 justify-end">
-              <FaX onClick={() => setInputs({ ...inputs, name: "" })} />
+              <FaX onClick={() => setInputs({ ...inputs, designacao: "" })} />
             </span>
           </div>
           {/* EMAIL |    CONTACTO*/}

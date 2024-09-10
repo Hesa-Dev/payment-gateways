@@ -124,6 +124,12 @@ footer{
   cursor: pointer;
   color: rgb(90, 116, 140);
 }
+.inpt-select {
+  text-decoration: none;
+  outline: none;
+  background: none;
+  border:none;
+}
 .bx-header{
 
   
