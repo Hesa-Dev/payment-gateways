@@ -13,9 +13,13 @@ import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
 import { CartContext } from "../context/CarrinhoContext";
+import setupApiClient from "../api/axios";
 
 export default function Card() {
   
+
+  const api = setupApiClient();
+
   const [itemOffset, setItemOffset] = useState(0);
   const totalPaginas = Math.ceil(produtos.length / 2);
   const endOffset = itemOffset + totalPaginas;
@@ -23,12 +27,12 @@ export default function Card() {
 
   const { addItemCarrinho, carrinho } = useContext(CartContext);
 
-  const [productos] = useState<(typeof produtos)[]>(produtos);
+  const [produto, setProduto] = useState<any>();
 
   // const [carrinho, setCarrinho] = useState<typeof produtos[]>([]);
 
   const handlePageChange = (event: any) => {
-    const newOffset = (event.selected * totalPaginas) % produtos.length;
+    const newOffset = (event.selected * totalPaginas) % produto.length;
     setItemOffset(newOffset);
   };
 
@@ -44,9 +48,9 @@ export default function Card() {
 
   const addCarrinho = (index: number): void => {
 
-    if (productos[index]) {
+    if (produto[index]) {
 
-      const novoItem = productos[index];
+      const novoItem = produto[index];
       addItemCarrinho(novoItem);
       console.log("item add :. ", novoItem);
     }
@@ -57,8 +61,8 @@ export default function Card() {
     }
   };
   const addCarrinhoV1 = (index: number): void => {
-    if (productos[index]) {
-      const novoItem = productos[index];
+    if (produto[index]) {
+      const novoItem = produto[index];
       // carrinho.push(novoItem)
 
       // carrinho.push(novoItem)
@@ -87,6 +91,31 @@ export default function Card() {
     //   console.log("itens carrinho : " , carrinho );
     //   console.log( "produto encontrado :. " , getProductById(index) )
   };
+
+  async function loadData() {
+    try {
+      api
+      .get("/produto/categoria", {
+        params: {
+          categoria: "Smartphone",
+        },
+      })
+      .then(function (resp) {
+
+        console.log("produto add : " , resp.data);
+        setProduto(resp.data)
+      })
+        .catch((error) => {
+          console.log("error api ", error);
+        });
+    } catch (error) {
+      console.log("error:. ", error);
+    }
+  }
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <>

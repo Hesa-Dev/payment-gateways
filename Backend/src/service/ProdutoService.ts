@@ -145,4 +145,32 @@ export class ProdutoService {
         }
         throw new Error("ID não existe ")
     }
+
+    async listarCategoria (categoria:string | undefined){
+
+        if (categoria) {
+            // verificar se categoria   existe  
+            const catProduto = await this.prismaclient.produto.findMany({
+                where: { category:categoria }
+            })
+            if (catProduto) {
+                // verificar se id existe :parseInt(id)
+                const prodCateg = await this.prismaclient.produto.findMany({
+                    where: { category:categoria },
+                    select: {
+                        id: true,
+                        name: true,
+                        price: true,
+                        qtdade: true,
+                        description: true,
+                        image: true,
+                        category:true
+                    }
+                })
+                return prodCateg
+            }
+        }
+        throw new Error("categoria não existe ")
+
+    }
 }

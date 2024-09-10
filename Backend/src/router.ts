@@ -31,6 +31,7 @@ router.post('/produto/add',  new ProdutoController().add)
 router.post('/produto/edit',  new ProdutoController().update)
 router.delete('/produto/delete',  new ProdutoController().delete)
 router.get('/produto/id',  new ProdutoController().getProdutoByID)
+router.get('/produto/categoria',  new ProdutoController().listarCategoria)
 
 // *******************VENDA ******************* //
 router.get('/venda',  new VendaController().getAll)

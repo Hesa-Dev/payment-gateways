@@ -67,6 +67,15 @@ class ProdutoController {
         return res.json(sender)
     }
 
+    async listarCategoria (req: Request, res: Response){
+
+        const produtoService = new ProdutoService();
+        const categoria =  req.query.categoria?.toString()
+        const sender =  await produtoService.listarCategoria(categoria)
+        return res.json(sender)
+
+    }
+
 }
 
 export { ProdutoController }
