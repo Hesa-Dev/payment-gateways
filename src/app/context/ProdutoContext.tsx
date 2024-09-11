@@ -23,9 +23,10 @@ interface Produto {
 type ProdutoContextData = {
   produto?: Produto;
   response?: string;
-  delete: (id: number) => void;
+  deletar: (id: number) => void;
   add: (produto: Produto) => void;
   getProdutoByID: (id: number) => void;
+  editar: (prod: Produto) => void;
 };
 
 export const ProdutoContext = createContext<ProdutoContextData>({
@@ -39,13 +40,14 @@ export const ProdutoContext = createContext<ProdutoContextData>({
   },
 
   add: async (produto: Produto) => {},
-  delete: async (id: number) => {},
+  deletar: async (id: number) => {},
   getProdutoByID: async (id: number) => {},
+  editar: async (prod: Produto) => {},
 });
 
 export function ProdutoProvider({ children }: { children: ReactNode }) {
   const [produto, setProduto] = useState<Produto>();
-  const [response, set] = useState<Produto>();
+  const [response, setResponse] = useState<string>("");
 
   const api = setupApiClient();
 
@@ -61,10 +63,13 @@ export function ProdutoProvider({ children }: { children: ReactNode }) {
           category: prod.category,
         })
         .then(function (resp) {
-          console.log("produto add : " + resp.data);
+          if (resp) {
+            setResponse("add");
+          }
         })
         .catch(function (error) {
           console.log("error add " + error.message);
+          setResponse("error");
         });
       setProduto(prod);
     }
@@ -74,18 +79,21 @@ export function ProdutoProvider({ children }: { children: ReactNode }) {
   async function deletar(id: number) {
     if (id) {
       const response = await api
-        .delete("/produto/delete", {
+        .delete("/produto/elete", {
           params: {
             id,
           },
         })
         .then(function (resp) {
-          console.log(resp.data);
+          if (resp.data) {
+            setResponse("delete");
+          }
 
           // toast.success("Usuario Excluido! ")
         })
         .catch(function (error) {
           console.log("error delete : ", error.message);
+          setResponse("error");
         });
     }
   }
@@ -99,17 +107,17 @@ export function ProdutoProvider({ children }: { children: ReactNode }) {
           },
         })
         .then(function (res) {
-          const {name, description, price, qtdade, image, id,category  } =
+          const { name, description, price, qtdade, image, id, category } =
             res.data;
 
           setProduto({
-            id ,
-            name ,
-            price ,
-            qtdade ,
-            description ,
-            image ,
-            category
+            id,
+            name,
+            price,
+            qtdade,
+            description,
+            image,
+            category,
           });
         })
         .catch(function (error) {
@@ -117,13 +125,42 @@ export function ProdutoProvider({ children }: { children: ReactNode }) {
         });
     }
   }
+
+  async function editar(prod: Produto) {
+    if (prod.id) {
+      const response = await api
+        .post("/produto/edit", {
+          id: prod.id,
+          name: prod.name,
+          description: prod.description,
+          price: prod.price,
+          qtdade: prod.qtdade,
+          image: prod.image,
+          category: prod.category,
+        })
+        .then(function (response) {
+          if (response.data) {
+            setResponse("update");
+          }
+          // const {name, description, price, qtdade, image, id,category  } =
+          // response.data;
+          // console.log("prod_edit: ", name , " " , id);
+        })
+        .catch(function (error) {
+          console.log("error response: ", error.message);
+          setResponse("error");
+        });
+    }
+  }
   return (
     <ProdutoContext.Provider
       value={{
         add,
-        delete: deletar,
+        deletar,
         produto,
-        getProdutoByID
+        getProdutoByID,
+        editar,
+        response,
       }}
     >
       {children}

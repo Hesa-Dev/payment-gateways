@@ -1,6 +1,4 @@
 
-
-
 import { ProdutoService } from "../service/ProdutoService";
 import { Request, Response } from "express";
 
@@ -34,9 +32,13 @@ class ProdutoController {
     }
 
     async update(req: Request, res: Response) {
+        
+        const produtoService = new ProdutoService();
 
-        const { name, description, price, qtdade, image, id } = req.body
-        const sender = await this.produtoS.update({ name, description, price, qtdade, image, id })
+        const { name, description, price,category, qtdade, image, id } = req.body
+        const sender = await produtoService.update({ name, description, price,category, qtdade, image, id })
+
+        // console.log("name : " , name , "id : " , id);
 
         return res.json(sender)
     }

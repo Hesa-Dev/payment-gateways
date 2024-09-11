@@ -19,15 +19,15 @@ export default function Card() {
   
 
   const api = setupApiClient();
+  const [produto, setProduto] = useState<any>();
 
   const [itemOffset, setItemOffset] = useState(0);
-  const totalPaginas = Math.ceil(produtos.length / 2);
+  const totalPaginas = Math.ceil(produto?.length / 2);
   const endOffset = itemOffset + totalPaginas;
-  const currentItems = produtos.slice(itemOffset, endOffset);
-
+  const currentItems = produto?.slice(itemOffset, endOffset);
   const { addItemCarrinho, carrinho } = useContext(CartContext);
 
-  const [produto, setProduto] = useState<any>();
+
 
   // const [carrinho, setCarrinho] = useState<typeof produtos[]>([]);
 
@@ -104,6 +104,7 @@ export default function Card() {
 
         console.log("produto add : " , resp.data);
         setProduto(resp.data)
+        
       })
         .catch((error) => {
           console.log("error api ", error);
@@ -132,7 +133,7 @@ export default function Card() {
                   key={index}
                 >
                   <Image
-                    src={produto.image3}
+                    src={"/products/"+produto.image}
                     width={200}
                     height={150}
                     alt="web"
@@ -142,11 +143,11 @@ export default function Card() {
                 </div>
                 {/* nome */}
                 <div className="font-bold text-base text-slate-400">
-                  {produto.nome}
+                  {produto.name}
                 </div>
                 {/* preco */}
                 <div className="font-bold text-xl text-slate-400">
-                  € {produto.preco}
+                  € {produto.price}
                 </div>
                 {/* actios| botões */}
                 <div className="flex lg:flex-row gap-3 cursor-pointer text-slate-600 md:flex-col sm:flex-col">

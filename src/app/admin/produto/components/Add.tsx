@@ -9,6 +9,7 @@ import { GrMoney } from "react-icons/gr";
 import { GoNumber } from "react-icons/go";
 import { IoImages } from "react-icons/io5";
 import { ProdutoContext } from "@/app/context/ProdutoContext";
+import { TbCategoryPlus } from "react-icons/tb";
 
 interface closeBox {
   isClose: (tipo: any) => void;
@@ -46,7 +47,6 @@ export default function ADD(props: closeBox) {
     };
 
     if (inputs) {
-      
       var cat = inputs.category;
 
       if (inputs.category == undefined || inputs.category == "") {
@@ -157,6 +157,9 @@ export default function ADD(props: closeBox) {
           </div>
           {/* Categoria */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
+            <div className="flex justify-start items-center ">
+              <TbCategoryPlus />
+            </div>
             <select
               name="selectedFruit"
               className="inpt-select  font-semibold w-full"
@@ -169,27 +172,28 @@ export default function ADD(props: closeBox) {
               </option>
               <option value="Smartphone">Smartphone</option>
               <option value="Computadores">Computadores</option>
-              <option value="acessorios">Acessorios Informatica</option>
+              <option value="Acessorios">Acessorios Informático</option>
             </select>
           </div>
           {/* IMAGE */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
             <label
               id="myfile"
-              className="inpt-label flex flex-row lg:w-full md:h-1/4 justify-start items-center gap-1"
+              className="inpt-label flex flex-row lg:w-full md:h-1/4 justify-start items-center gap-2"
             >
               <IoImages />
               Image *
               <input
                 type="file"
                 id="myfile"
-                className="inpt-txt lg:w-full"
+                className="inpt-txt lg:w-full hidden"
                 onChange={(event) => handleFileChange(event)}
                 // onChange={(e) =>
                 //   setInputs({ ...inputs, image: e.target.value })
                 // }
                 required
               />
+             <span> {inputs.image}</span> 
             </label>
 
             {/* remove */}

@@ -10,6 +10,10 @@ import { GoNumber } from "react-icons/go";
 import { IoImages } from "react-icons/io5";
 import { ProdutoContext } from "@/app/context/ProdutoContext";
 import setupApiClient from "@/app/api/axios";
+import { TbCategoryPlus } from "react-icons/tb";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface closeBox {
   isClose: (tipo: any) => void;
@@ -18,7 +22,21 @@ interface closeBox {
 }
 
 export default function EDIT(props: closeBox) {
-  const { add, produto, getProdutoByID } = useContext(ProdutoContext);
+
+  // const notify = () => toast("This is a toast!", {
+  //   position: "top-right",
+  //   autoClose: 3000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  // });
+
+  // const notify = () => toast("Wow so easy!");
+
+  const { produto, getProdutoByID, editar, response } =
+    useContext(ProdutoContext);
 
   const api = setupApiClient();
 
@@ -37,10 +55,12 @@ export default function EDIT(props: closeBox) {
     arg: true,
   });
 
-  const handleAdd = async (e: any) => {
+  const handleEdit = async (e: any) => {
     e.preventDefault();
 
-    const client_clean = {
+    toast.success("produto[" + props.produtoId + "] editado com sucesso");
+
+    const fieldClean = {
       designacao: "",
       qtdade: "",
       category: "",
@@ -50,35 +70,49 @@ export default function EDIT(props: closeBox) {
     };
 
     if (inputs) {
-      const client: any = {
+      var cat = "Smartphone";
+
+      if (inputs.category) {
+        cat = inputs.category;
+      }
+
+      const prodData: any = {
         name: inputs.designacao,
         description: inputs.description,
         price: parseFloat(inputs.price),
         qtdade: parseFloat(inputs.qtdade),
-        category: inputs.category,
+        category: cat,
         image: inputs.image,
+        id: props.produtoId,
       };
 
-      if (selectedFile) {
-        await add(client);
-        props.loadTbl();
-        setInputs(client_clean);
+      if (prodData.image) {
+        await editar(prodData);
+
+        if (response == "update") {
+          props.loadTbl();
+          // notify();
+         
+        }
+
+        setInputs(fieldClean);
+        console.log(prodData.id, "", prodData.name, " ", prodData.description);
       }
     }
 
-    console.log(
-      inputs.image,
-      " ",
-      inputs.designacao,
-      " ",
-      inputs.category,
-      " ",
-      inputs.price,
-      "",
-      inputs.qtdade,
-      "",
-      inputs.description
-    );
+    // console.log(
+    //   inputs.image,
+    //   " ",
+    //   inputs.designacao,
+    //   " ",
+    //   inputs.category,
+    //   " ",
+    //   inputs.price,
+    //   "",
+    //   inputs.qtdade,
+    //   "",
+    //   inputs.description
+    // );
   };
 
   const handleFileChange = (event: any) => {
@@ -90,40 +124,46 @@ export default function EDIT(props: closeBox) {
     async function loadData(idproduto: number | undefined) {
       console.log("id:_props: " + idproduto);
 
-      const response = api
+      const response = await api
         .get("/produto/id", {
           params: {
-            id: idproduto,
+            id: props.produtoId,
           },
         })
-        .then((resp) => {
-          const { name, description, price, qtdade, image, id } = resp.data;
+        .then(function (res) {
+          const { name, description, price, qtdade, image, id, category } =
+            res.data;
 
-          // console.log("produto_by_id", name)
-          setInputs(resp.data);
-          // console.log("response_data", resp.data)
-          // console.log("nif", nif)
+          setInputs({
+            ...boxOpen,
+            designacao: name,
+            qtdade: qtdade.toString(),
+            category: category,
+            description: description,
+            price: price.toString(),
+            image: image,
+          });
         })
-        .catch((error) => {
-          console.log("Erro na busca | API ", error.message);
+        .catch(function (error) {
+          console.log("error response: ", error.message);
         });
     }
 
-    if (props.produtoId) {
-      getProdutoByID(props.produtoId);
+    // if (props.produtoId) {
+    //   getProdutoByID(props.produtoId);
 
-      if (produto) {
-        setInputs({
-          ...boxOpen,
-          designacao: produto.name,
-          qtdade: produto.qtdade.toString(),
-          category: produto.category,
-          description: produto.description,
-          price: produto.price.toString(),
-          image: produto.image,
-        });
-      }
-    }
+    //   if (produto) {
+    //     setInputs({
+    //       ...boxOpen,
+    //       designacao: produto.name,
+    //       qtdade: produto.qtdade.toString(),
+    //       category: produto.category,
+    //       description: produto.description,
+    //       price: produto.price.toString(),
+    //       image: produto.image,
+    //     });
+    //   }
+    // }
 
     loadData(props.produtoId);
   }, []);
@@ -148,7 +188,7 @@ export default function EDIT(props: closeBox) {
         {/* Formulario */}
         <form
           action=""
-          onSubmit={(e: any) => handleAdd(e)}
+          onSubmit={(e: any) => handleEdit(e)}
           className="flex flex-col w-full gap-2"
         >
           {/* NOME */}
@@ -168,7 +208,8 @@ export default function EDIT(props: closeBox) {
             />
             {/* remove */}
             <span className="cursor-pointer flex w-1/12 justify-end">
-              <FaX onClick={() => setInputs({ ...inputs, designacao: "" })} />
+              <FaX onClick={() => toast.success("delete")} />
+              {/* <FaX onClick={() => setInputs({ ...inputs, designacao: "" })} /> */}
             </span>
           </div>
           {/* Descrição*/}
@@ -196,6 +237,9 @@ export default function EDIT(props: closeBox) {
           </div>
           {/* Categoria */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
+            <div className="flex justify-start items-center ">
+              <TbCategoryPlus />
+            </div>
             <select
               name="selectedFruit"
               className="inpt-select  font-semibold w-full"
@@ -216,7 +260,7 @@ export default function EDIT(props: closeBox) {
                 Computadores
               </option>
               <option selected={inputs.category == "acessorios" && true}>
-                Acessorios Informatica
+                Acessorios Informático
               </option>
             </select>
           </div>
@@ -224,7 +268,7 @@ export default function EDIT(props: closeBox) {
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
             <label
               id="myfile"
-              className="inpt-label flex flex-row lg:w-full md:h-1/4 justify-start items-center gap-1"
+              className="inpt-label cursor-pointer flex flex-row lg:w-full md:h-1/4 justify-start items-center gap-1"
             >
               <IoImages />
               Image *
@@ -232,13 +276,14 @@ export default function EDIT(props: closeBox) {
                 type="file"
                 id="myfile"
                 // value={inputs.image}
-                className="inpt-txt lg:w-full"
+                className="inpt-txt lg:w-full hidden"
                 onChange={(event) => handleFileChange(event)}
                 // onChange={(e) =>
                 //   setInputs({ ...inputs, image: e.target.value })
                 // }
-                required
+                // required
               />
+              <span> {inputs.image && inputs.image}</span>
             </label>
 
             {/* remove */}
@@ -293,11 +338,13 @@ export default function EDIT(props: closeBox) {
 
           {/* btn add  */}
           <button type="submit" className="w-full p-2 btn-add">
-            {" "}
             Atualizar Produto
           </button>
         </form>
+      
       </div>
+
+      <ToastContainer />
     </>
   );
 }

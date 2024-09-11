@@ -13,6 +13,8 @@ import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import setupApiClient from "../api/axios";
 import { FaX } from "react-icons/fa6";
 import Link from "next/link";
+import { MdModeEdit } from "react-icons/md";
+import { RiDeleteBin6Fill } from "react-icons/ri";
 
 export default function Admin() {
   const customStyle = {
@@ -64,8 +66,9 @@ export default function Admin() {
       // selector: (row: any) => row.accao,
       cell: (row: any) => (
         <div className="flex flex-row gap-2 justify-center p-2">
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <button className="flex border rounded-sm  w-9 h-10  text-red-400 p-2 justify-center items-center">
+            <RiDeleteBin6Fill />
+          </button>
         </div>
       ),
     },

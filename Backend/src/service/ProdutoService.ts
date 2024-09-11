@@ -66,7 +66,8 @@ export class ProdutoService {
                         qtdade: produto.qtdade,
                         description: produto.description?.toString(),
                         image: produto.image?.toString(),
-                        updatedAt: dataTime()
+                        updatedAt: dataTime(),
+                        category: produto.category
                     }
                 })
 

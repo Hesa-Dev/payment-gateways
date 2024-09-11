@@ -13,23 +13,45 @@ import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import ADD from "./components/Add";
 import EDIT from "./components/Edit";
+// import ModalV1 from "./components/Modal";
+import { ProdutoContext } from "@/app/context/ProdutoContext";
 
 export default function Produto() {
+
   const api = setupApiClient();
+
+  const { deletar } = useContext(ProdutoContext);
+    
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const [produtos, setProdutos] = useState<any>([]);
   const [search, setSearch] = useState<any>("");
   const [filteredData, setFilteredData] = useState<any[]>([]);
 
-  const [prodID, setProdID] = useState<number>();
+  const [prodID, setProdID] = useState<any>();
   const [boxOpen, setBoxOpen] = useState({
     add: false,
     edit: false,
     arg: true,
   });
 
+  function modalOpen(id: number) {
+    setProdID(id);
+    setModalIsOpen(true);
+  }
+  function modalClose() {
+    setModalIsOpen(false);
+  }
+
+  async function delet() {
+
+    // toast.success('deletando usuario ...'),
+   await deletar(prodID)
+    await loadTable()
+    modalClose()
+}
+
   const isClose = (type: string): void => {
-   
     if (type === "add") {
       setBoxOpen({ ...boxOpen, add: false });
       loadTable();
@@ -40,20 +62,18 @@ export default function Produto() {
   };
 
   const isOpen = (type: string, id?: number) => {
-
     // alert("type :   " + type)
     switch (type) {
       case "add":
         if (boxOpen.add === false) {
-          setBoxOpen({ ...boxOpen, add: true , edit:false});
+          setBoxOpen({ ...boxOpen, add: true, edit: false });
           return;
         }
         break;
       default:
         if (boxOpen.edit == false) {
-         
-          setBoxOpen({ ...boxOpen, edit: true  , add:false  });
-          setProdID(id)
+          setBoxOpen({ ...boxOpen, edit: true, add: false });
+          setProdID(id);
           return;
         }
         break;
@@ -124,13 +144,16 @@ export default function Produto() {
       // selector: (row: any) => row.accao,
       cell: (row: any) => (
         <div className="flex flex-row gap-2 justify-center p-2">
-          <button 
-          className=" flex w-9 rounded-sm h-10 border  text-yellow-400 p-2 justify-center items-center"
-          onClick={() => isOpen("edit", row.id)}>
+          <button
+            className=" flex w-9 rounded-sm h-10 border  text-yellow-400 p-2 justify-center items-center"
+            onClick={() => isOpen("edit", row.id)}
+          >
             <MdModeEdit />
           </button>
 
-          <button className="flex border rounded-sm  w-9 h-10  text-red-400 p-2 justify-center items-center">
+          <button 
+          onClick={()=> modalOpen(row.id)}
+          className="flex border rounded-sm  w-9 h-10  text-red-400 p-2 justify-center items-center">
             <RiDeleteBin6Fill />
           </button>
         </div>
@@ -170,7 +193,10 @@ export default function Produto() {
       <HeaderAdmin />
       <div className="m-3 border-t-2 p-1 border-slate-400">
         {/*  bnt add  */}
-        <div onClick={() => isOpen("add")}  className="flex w-full btn-add justify-center items-center ">
+        <div
+          onClick={() => isOpen("add")}
+          className="flex w-full btn-add justify-center items-center "
+        >
           Adicionar Produto
           <IoIosAddCircle className="w-12 h-11 " />
         </div>
@@ -215,8 +241,18 @@ export default function Produto() {
         {/* formularios  | novo cliente*/}
         {boxOpen.add == true && <ADD isClose={isClose} loadTbl={loadTable} />}
         {/* EDIT PRODUTO */}
-        {boxOpen.edit == true && <EDIT isClose={isClose} loadTbl={loadTable} produtoId={prodID} />}
+        {boxOpen.edit == true && (
+          <EDIT isClose={isClose} loadTbl={loadTable} produtoId={prodID} />
+        )}
       </div>
+
+      {/* {modalIsOpen && (
+        <ModalV1
+          isOpen={modalIsOpen}
+          onRequestClose={modalClose}
+          delet={delet}
+        />
+      )} */}
     </>
   );
 }
