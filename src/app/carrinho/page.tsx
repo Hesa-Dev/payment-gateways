@@ -10,10 +10,15 @@ import { RiDeleteBinFill } from "react-icons/ri";
 import { imgPayment } from "../productos";
 import { parseCookies } from "nookies";
 import { CompraContext } from "../context/CompraContext";
+import setupApiClient from "../api/axios";
+
 
 export default function Carrinho() {
+
+  const api =  setupApiClient()
   // const [carrinho, setCarrinho] = useState(0);
-  const { addItemCarrinho, carrinho, deletarItemCarrinho } =
+
+  const { addItemCarrinho, carrinho, produtoID, deletarItemCarrinho } =
     useContext(CartContext);
   const { addResumo, deterResumo, resumoCompra } = useContext(CompraContext);
 
@@ -21,6 +26,8 @@ export default function Carrinho() {
   const [stock, setStock] = useState<number>(4);
   const [ArrayQtda, setArrayQtda] = useState<number[]>([]);
   const [total, setTotal] = useState<number[]>([]);
+
+  const [produto, setProduto] = useState<any>();
 
   const [price, setPrice] = useState<number[]>([]);
   // const [qtdade, setQtdade] = useState<number>(0);
@@ -32,42 +39,70 @@ export default function Carrinho() {
     }
   };
 
-  const testeEvent = ( idx:number ,evt:any) => {
+  async function loadItemCarrinho() {
+    if (produtoID?.length) {
+      try {
+        api
+          .get("/produto/carrinho", {
+            params: {
+              ids: produtoID,
+            },
+          })
+          .then(function (resp) {
 
-    alert(evt.target.value)
-    alert("id " +  idx)
-    console.log("id " ,  idx);
+            console.log("produto add_carrinho : ", resp.data);
 
+            setProduto(resp.data);
+          })
+          .catch((error) => {
+            console.log("error api ", error);
+          });
+      } catch (error) {
+        console.log("error:. ", error);
+      }
+    }
   }
 
+  useEffect(() => {
+    if (produtoID?.length) {
+      if (produtoID.length > 0) {
+        // alert("total item " +  produtoID.length )
+        console.log("itens : ", produtoID);
+      }
+    }
+
+    //  console.log("total item " , produtoID?.length);
+  }, []);
+
+  const testeEvent = (idx: number, evt: any) => {
+    alert(evt.target.value);
+    alert("id " + idx);
+    console.log("id ", idx);
+  };
 
   const calcTotal = (idx: number, evt: any) => {
-
-    if (typeof idx!==undefined) {
-
-      alert("id : " + idx)
+    if (typeof idx !== undefined) {
+      alert("id : " + idx);
 
       // if (idx >= 0) {
-        const qtda = parseInt(evt&&evt.target.value);
-        console.log("idx : ", idx, "evt :", qtda);
+      const qtda = parseInt(evt && evt.target.value);
+      console.log("idx : ", idx, "evt :", qtda);
 
-        if (carrinho?.length) {
-          const prod = carrinho[idx].preco;
-          const total = prod * qtda;
+      if (carrinho?.length) {
+        const prod = carrinho[idx].preco;
+        const total = prod * qtda;
 
-          alert("total : " + total)
+        alert("total : " + total);
 
+        // console.log("total_preco : ", total);
+        // price?.push(total)
 
-          // console.log("total_preco : ", total);
-          // price?.push(total)
+        setPrice([...price, idx, total]);
 
-          setPrice([...price , idx , total])
+        // setPrice(price?.push(total))
 
-          // setPrice(price?.push(total))
-
-          // return total;
+        // return total;
         // }
-
       }
     }
 
@@ -151,6 +186,8 @@ export default function Carrinho() {
 
     geraArrayQtdades();
 
+    loadItemCarrinho()
+
     checkCarrinho();
   }, []);
 
@@ -162,7 +199,7 @@ export default function Carrinho() {
       </div>
 
       <div className="flex justify-center items-center">
-        {totalItem == 0 ? (
+        {produtoID?.length == 0 ? (
           <div
             className="h-1/4 bg-slate-500 justify-center 
         items-center font-normal text-xl p-3 flex rounded-sm flex-col text-white"
@@ -174,8 +211,8 @@ export default function Carrinho() {
           </div>
         ) : (
           <div className="flex flex-col justify-center  gap-2  items-center  w-1/2">
-            {carrinho &&
-              carrinho.map((item: any, idx: number) => {
+            {produto &&
+              produto.map((item: any, idx: number) => {
                 return (
                   <div
                     className="flex lg:flex-row  sm:flex-col md:flex-col justify-center  
@@ -184,7 +221,7 @@ export default function Carrinho() {
                   >
                     <div className="border border-slate-400 rounded-md p-2">
                       <Image
-                        src={item.image3}
+                        src={"/products/"+item.image}
                         width={150}
                         height={150}
                         alt="web"
@@ -204,7 +241,7 @@ export default function Carrinho() {
                         Em Stock
                       </p>
                       <span className="font-bold text-base p-2 rounded-md text-slate-600 border">
-                        {stock}
+                        {item.qtdade}
                       </span>
                       {/* btn deletar */}
                       <span
@@ -223,7 +260,7 @@ export default function Carrinho() {
                         </span>
                         <div>
                           <select
-                          key={idx}
+                            key={idx}
                             className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
                             // onChange={(evt) => setIDX(evt, item.id)}
                             onChange={(evt) => calcTotal(idx, evt)}
@@ -243,7 +280,7 @@ export default function Carrinho() {
                           €
                           {price.indexOf(price[idx]) == idx
                             ? price[idx]
-                            : item.preco}
+                            : item.price}
                         </span>
                       </div>
                     </div>

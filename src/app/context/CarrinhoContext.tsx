@@ -16,6 +16,8 @@ type CartContextData = {
   carrinho?: Carrinho[] | undefined;
   deletarItemCarrinho: (id: number) => void;
   addItemCarrinho: (produto: Carrinho) => void;
+  produtoID?: number[];
+  saveID:(id: number) => void;
 };
 
 interface Carrinho {
@@ -42,12 +44,15 @@ export const CartContext = createContext<CartContextData>({
       image3: "",
     },
   ],
+  produtoID: [],
   addItemCarrinho: async (produto: Carrinho) => {},
   deletarItemCarrinho: async (id: number) => {},
+  saveID:async (id: number) => {}
 });
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [carrinho, setCarrinho] = useState<Carrinho[]>([]);
+  const [produtoID, setprodutoID] = useState<number[]>([]);
 
   function addItem(itens: Carrinho) {
     destroyCookie(null, "totalCarrinho", { path: "/" });
@@ -63,14 +68,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  function deletarItem(id: number) {
+  async function saveID(id: number) {
+    if (id>=0) {
+      setprodutoID((prevProdutos) => [...prevProdutos, id]);
+    }
 
+  }
+
+  function deletarItem(id: number) {
     if (carrinho.length) {
       if (carrinho.length > 0) {
         setCarrinho(carrinho.filter((item) => item.id !== id));
       }
     }
- 
   }
 
   return (
@@ -79,6 +89,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         addItemCarrinho: addItem,
         deletarItemCarrinho: deletarItem,
         carrinho,
+        produtoID,
+        saveID,
       }}
     >
       {children}

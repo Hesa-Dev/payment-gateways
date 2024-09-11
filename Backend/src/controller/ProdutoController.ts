@@ -16,7 +16,7 @@ class ProdutoController {
             price,
             qtdade,
             image,
-            category 
+            category
         } = req.body
 
         const sender = await produtoService.add({
@@ -32,11 +32,11 @@ class ProdutoController {
     }
 
     async update(req: Request, res: Response) {
-        
+
         const produtoService = new ProdutoService();
 
-        const { name, description, price,category, qtdade, image, id } = req.body
-        const sender = await produtoService.update({ name, description, price,category, qtdade, image, id })
+        const { name, description, price, category, qtdade, image, id } = req.body
+        const sender = await produtoService.update({ name, description, price, category, qtdade, image, id })
 
         // console.log("name : " , name , "id : " , id);
 
@@ -55,29 +55,45 @@ class ProdutoController {
 
         const produtoService = new ProdutoService();
 
-        const { id } = req.body
+        // const { id } = req.body
+        const id = Number(req.query.id)
         const sender = produtoService.delete(id)
-        // const sender  = await this.produtoS.delete(id) 
         return res.json(sender)
     }
 
-    async getProdutoByID (req: Request, res: Response) {
+    async getProdutoByID(req: Request, res: Response) {
 
         const produtoService = new ProdutoService();
-        const id = Number( req.query.id)
-        const sender =  await produtoService.getProdutoByID(id)
+        const id = Number(req.query.id)
+        const sender = await produtoService.getProdutoByID(id)
         return res.json(sender)
     }
 
-    async listarCategoria (req: Request, res: Response){
+    async listarCategoria(req: Request, res: Response) {
 
         const produtoService = new ProdutoService();
-        const categoria =  req.query.categoria?.toString()
-        const sender =  await produtoService.listarCategoria(categoria)
+        const categoria = req.query.categoria?.toString()
+        const sender = await produtoService.listarCategoria(categoria)
         return res.json(sender)
 
     }
 
+    async addCarrinho(req: Request, res: Response) {
+
+        const produtoService = new ProdutoService();
+        var ids = req.query.ids  // result ['1', '2', '3']
+
+        if (ids) {
+
+            if (Array.isArray(ids)) {
+
+                const idsArrays: any = ids.map(Number);
+                // console.log("numberArray : ", idsArrays);
+                const sender = await produtoService.addCarrinho(idsArrays)
+                return res.json(sender)
+            }
+        }
+    }
 }
 
 export { ProdutoController }

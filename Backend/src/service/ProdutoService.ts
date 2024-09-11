@@ -174,4 +174,21 @@ export class ProdutoService {
         throw new Error("categoria não existe ")
 
     }
+
+    async addCarrinho (ids:number[]){
+
+        if (ids.length) {
+
+            // fazer a pesquisa
+              const carrinho = await this.prismaclient.produto.findMany({
+                where: { id:{
+                    in:ids
+                } }
+            })
+
+            return carrinho
+        }
+
+        throw new Error("ids vazio ... ")
+    }
 }

@@ -15,7 +15,7 @@ import React from "react";
 
 interface ModaProps {
   isOpen?: boolean;
-  id?: string;
+  id?: number;
   onRequestClose?: () => void;
   delet: () => void;
 }
@@ -36,7 +36,7 @@ export default function ModalV1(props: ModaProps) {
               </ModalHeader>
               <ModalBody>
                 <p className="text-center font-semibold">
-                  Desejas Excluir O Excluir Produto ?
+                  O Excluir Produto[{props.id}] ?
                 </p>
               </ModalBody>
               <ModalFooter className="flex justify-center ">

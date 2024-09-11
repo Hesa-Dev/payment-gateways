@@ -16,18 +16,15 @@ import { CartContext } from "../context/CarrinhoContext";
 import setupApiClient from "../api/axios";
 
 export default function Card() {
-  
-
   const api = setupApiClient();
   const [produto, setProduto] = useState<any>();
+  const [idProduto, setIdProduto] = useState<number[]>([]);
 
   const [itemOffset, setItemOffset] = useState(0);
   const totalPaginas = Math.ceil(produto?.length / 2);
   const endOffset = itemOffset + totalPaginas;
   const currentItems = produto?.slice(itemOffset, endOffset);
-  const { addItemCarrinho, carrinho } = useContext(CartContext);
-
-
+  const { addItemCarrinho, carrinho, saveID } = useContext(CartContext);
 
   // const [carrinho, setCarrinho] = useState<typeof produtos[]>([]);
 
@@ -46,10 +43,16 @@ export default function Card() {
 
   // Funções para adicionar item no carrinho de compra
 
+  const salvar_id_produto = (index: number): void => {
+
+    if (index>=0) {
+      saveID(index);
+    }
+
+  };
+
   const addCarrinho = (index: number): void => {
-
     if (produto[index]) {
-
       const novoItem = produto[index];
       addItemCarrinho(novoItem);
       console.log("item add :. ", novoItem);
@@ -60,6 +63,7 @@ export default function Card() {
       // console.log("produtos: ", carrinho);
     }
   };
+
   const addCarrinhoV1 = (index: number): void => {
     if (produto[index]) {
       const novoItem = produto[index];
@@ -95,17 +99,14 @@ export default function Card() {
   async function loadData() {
     try {
       api
-      .get("/produto/categoria", {
-        params: {
-          categoria: "Smartphone",
-        },
-      })
-      .then(function (resp) {
-
-        console.log("produto add : " , resp.data);
-        setProduto(resp.data)
-        
-      })
+        .get("/produto/categoria", {
+          params: {
+            categoria: "Smartphone",
+          },
+        })
+        .then(function (resp) {
+          setProduto(resp.data);
+        })
         .catch((error) => {
           console.log("error api ", error);
         });
@@ -133,7 +134,7 @@ export default function Card() {
                   key={index}
                 >
                   <Image
-                    src={"/products/"+produto.image}
+                    src={"/products/" + produto.image}
                     width={200}
                     height={150}
                     alt="web"
@@ -155,7 +156,7 @@ export default function Card() {
                   <div
                     className="flex lg:flex-row lg:text-base border  md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
                   items-center justify-center  rounded-sm md:p-1 md:gap-2 sm:text-xs md:text-xs"
-                    onClick={() => addCarrinho(index)}
+                    onClick={() => salvar_id_produto(produto.id)}
                   >
                     Adicionar
                     <RiShoppingCart2Fill />

@@ -13,15 +13,14 @@ import { MdModeEdit } from "react-icons/md";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import ADD from "./components/Add";
 import EDIT from "./components/Edit";
-// import ModalV1 from "./components/Modal";
+import ModalV1 from "./components/Modal";
 import { ProdutoContext } from "@/app/context/ProdutoContext";
 
 export default function Produto() {
-
   const api = setupApiClient();
 
-  const { deletar } = useContext(ProdutoContext);
-    
+  const { deletar, response } = useContext(ProdutoContext);
+
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 
   const [produtos, setProdutos] = useState<any>([]);
@@ -44,12 +43,13 @@ export default function Produto() {
   }
 
   async function delet() {
-
     // toast.success('deletando usuario ...'),
-   await deletar(prodID)
-    await loadTable()
-    modalClose()
-}
+
+    deletar(prodID);
+
+    loadTable();
+    modalClose();
+  }
 
   const isClose = (type: string): void => {
     if (type === "add") {
@@ -151,9 +151,10 @@ export default function Produto() {
             <MdModeEdit />
           </button>
 
-          <button 
-          onClick={()=> modalOpen(row.id)}
-          className="flex border rounded-sm  w-9 h-10  text-red-400 p-2 justify-center items-center">
+          <button
+            onClick={() => modalOpen(row.id)}
+            className="flex border rounded-sm  w-9 h-10  text-red-400 p-2 justify-center items-center"
+          >
             <RiDeleteBin6Fill />
           </button>
         </div>
@@ -246,13 +247,14 @@ export default function Produto() {
         )}
       </div>
 
-      {/* {modalIsOpen && (
+      {modalIsOpen && (
         <ModalV1
           isOpen={modalIsOpen}
           onRequestClose={modalClose}
           delet={delet}
+          id={prodID}
         />
-      )} */}
+      )}
     </>
   );
 }

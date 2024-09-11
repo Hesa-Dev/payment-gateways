@@ -11,7 +11,7 @@ import { CartContext } from "../context/CarrinhoContext";
 
 export default function Header() {
   // const { carrinho } = useContext(CartContext);
-  const { carrinho } = useContext(CartContext);
+  const { carrinho , produtoID } = useContext(CartContext);
   return (
     <>
       <nav className="flex">
@@ -43,8 +43,9 @@ export default function Header() {
                 style={{ fontSize: "20px", color: "#f2faf7" }}
               />
               <span className="font-bold">
-                ( {carrinho?.length ? carrinho.length : 0} )
-              </span>{" "}
+                {/* ( {carrinho?.length ? carrinho.length : 0} ) */}
+                ( {produtoID?.length ? produtoID.length : 0} )
+              </span>
               Carrinho
             </Link>
           </div>

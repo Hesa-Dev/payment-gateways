@@ -79,7 +79,7 @@ export function ProdutoProvider({ children }: { children: ReactNode }) {
   async function deletar(id: number) {
     if (id) {
       const response = await api
-        .delete("/produto/elete", {
+        .delete("/produto/delete", {
           params: {
             id,
           },
