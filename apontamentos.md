@@ -36,4 +36,8 @@ https://react-data-table-component.netlify.app/?path=/docs/getting-started-examp
 
 instalacao # npm install react-data-table-component 
 
+# criar rotas dinamicas 
+https://www.youtube.com/results?search_query=CRIAR+ROTAS+DINAMICAS+NO+NEXTJS+
+https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
+
 
