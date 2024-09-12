@@ -42,4 +42,9 @@ https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
 
 ex: /produto/[produtoID]/page.tsx
 
+# Implementação do stripe 
+https://www.mdfaisal.com/blog/how-to-integrate-stripe-with-a-react-application
+https://www.npmjs.com/package/@stripe/react-stripe-js
+https://docs.stripe.com/
+
 
