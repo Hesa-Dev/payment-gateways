@@ -11,6 +11,7 @@ import { imgPayment } from "../productos";
 import { parseCookies } from "nookies";
 import { CompraContext } from "../context/CompraContext";
 import setupApiClient from "../api/axios";
+import Select from "./components/SelectQtdade";
 
 
 export default function Carrinho() {
@@ -18,9 +19,9 @@ export default function Carrinho() {
   const api =  setupApiClient()
   // const [carrinho, setCarrinho] = useState(0);
 
-  const { addItemCarrinho, carrinho, produtoID, deletarItemCarrinho } =
-    useContext(CartContext);
-  const { addResumo, deterResumo, resumoCompra } = useContext(CompraContext);
+  const {  carrinho, produtoID, deletarItemCarrinho } = useContext(CartContext);
+   
+  // const { addResumo, deterResumo, resumoCompra } = useContext(CompraContext);
 
   const [totalItem, setTotalItem] = useState(carrinho?.length);
   const [stock, setStock] = useState<number>(4);
@@ -63,22 +64,8 @@ export default function Carrinho() {
     }
   }
 
-  useEffect(() => {
-    if (produtoID?.length) {
-      if (produtoID.length > 0) {
-        // alert("total item " +  produtoID.length )
-        console.log("itens : ", produtoID);
-      }
-    }
 
-    //  console.log("total item " , produtoID?.length);
-  }, []);
-
-  const testeEvent = (idx: number, evt: any) => {
-    alert(evt.target.value);
-    alert("id " + idx);
-    console.log("id ", idx);
-  };
+ 
 
   const calcTotal = (idx: number, evt: any) => {
     if (typeof idx !== undefined) {
@@ -169,6 +156,7 @@ export default function Carrinho() {
     };
 
     const geraArrayQtdades = () => {
+
       let numberToDigitArray: number[] = [];
       // console.log(idx);
 
@@ -258,8 +246,11 @@ export default function Carrinho() {
                         <span className="font-bold text-base text-slate-400">
                           Qtda
                         </span>
-                        <div>
-                          <select
+                        <div >
+
+                          {/*  component selected */}
+                          <Select stock={item.qtdade} preco={item.price} />
+                          {/* <select
                             key={idx}
                             className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
                             // onChange={(evt) => setIDX(evt, item.id)}
@@ -270,10 +261,10 @@ export default function Carrinho() {
                                 {number}
                               </option>
                             ))}
-                          </select>
+                          </select> */}
                         </div>
 
-                        <span
+                        {/* <span
                           key={idx}
                           className="font-bold text-2xl text-slate-600"
                         >
@@ -281,7 +272,7 @@ export default function Carrinho() {
                           {price.indexOf(price[idx]) == idx
                             ? price[idx]
                             : item.price}
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -296,11 +287,11 @@ export default function Carrinho() {
                   Formas de Pagamento
                 </p>
                 {imgPayment &&
-                  imgPayment.map((image: any, id: number) => {
+                  imgPayment.map((photo: any, id: number) => {
                     return (
                       <div className="flex flex-row gap-3 p-2" key={id}>
                         <Image
-                          src={image.img}
+                          src={photo.img}
                           width={50}
                           height={50}
                           alt="web"

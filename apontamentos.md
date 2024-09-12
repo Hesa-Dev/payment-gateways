@@ -40,4 +40,6 @@ instalacao # npm install react-data-table-component
 https://www.youtube.com/results?search_query=CRIAR+ROTAS+DINAMICAS+NO+NEXTJS+
 https://nextjs.org/docs/app/building-your-application/routing/dynamic-routes
 
+ex: /produto/[produtoID]/page.tsx
+
 

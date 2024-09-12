@@ -1,5 +1,7 @@
 "use client";
 
+
+//  OBS:. rota dinamica 
 import { RiShoppingCart2Fill } from "react-icons/ri";
 import Header from "@/app/components/Header";
 import Image from "next/image";

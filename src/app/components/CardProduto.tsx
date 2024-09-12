@@ -26,7 +26,7 @@ export default function Card() {
   const totalPaginas = Math.ceil(produto?.length / 2);
   const endOffset = itemOffset + totalPaginas;
   const currentItems = produto?.slice(itemOffset, endOffset);
-  const { addItemCarrinho, carrinho, saveID } = useContext(CartContext);
+  const { addItemCarrinho, carrinho, saveID: saveIDproduto } = useContext(CartContext);
 
   const { getProdutoByID } = useContext(ProdutoContext);
 
@@ -51,7 +51,7 @@ export default function Card() {
   const salvar_id_produto = (index: number): void => {
 
     if (index>=0) {
-      saveID(index);
+      saveIDproduto(index);
     }
 
   };
