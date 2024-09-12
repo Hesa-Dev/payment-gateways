@@ -15,7 +15,7 @@ export default function Select(props: Props) {
     geraArrayQtdades();
   }, []);
 
-  const calculaTotal = (evt: any) =>{
+  const totalItem = (evt: any) =>{
 
     if (evt) {
 
@@ -47,7 +47,7 @@ export default function Select(props: Props) {
       <select
         className="w-full justify-end flex font-bold p-1 text-base text-slate-600 inpt-select"
         // onChange={(evt) => setIDX(evt, item.id)}
-        onChange={(evt) => calculaTotal(evt)}
+        onChange={(evt) => totalItem(evt)}
       >
         {ArrayQtda.map((number) => (
           <option key={number} value={number}>

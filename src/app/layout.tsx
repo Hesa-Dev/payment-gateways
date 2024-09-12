@@ -5,6 +5,8 @@ import { CartProvider } from "./context/CarrinhoContext";
 import { CompraProvider } from "./context/CompraContext";
 import { ProdutoProvider } from "./context/ProdutoContext";
 
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

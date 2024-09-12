@@ -9,12 +9,31 @@ import { MdLocationOn } from "react-icons/md";
 import { useContext, useState } from "react";
 import Image from "next/image";
 import { CompraContext } from "../context/CompraContext";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import CheckoutForm from "./Components/Checkout";
+
 
 
 
 export default function Pagamento() {
 
+  const stripePromise = loadStripe('pk_live_51PyDlJRsyKScRTtSw9zSnk1qySDxK6CeHY5a4o7luV3IdPb5gJdNDXaNP1aI4lGOHiFleJJlEJFMFHEbCoaLqhqi00lgHX4OZs');
+  const options = {
+    mode: 'payment',
+    amount: 5,
+    currency: 'eur',
+    // Fully customizable with appearance API.
+    appearance: {
+      /*...*/
+    },
+  };
+
   const { addCompra, deletarCompra , compra } =  useContext(CompraContext);
+
+  const stripe = useStripe();
+  const elements = useElements();
  
   const [inputs, setInputs] = useState({
     designacao: "",
@@ -25,6 +44,8 @@ export default function Pagamento() {
   const [tipoPGM, setTipoPGM] = useState("");
   const [imgPayment, setImagePayment] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
+  const [error, setError] = useState<any >(undefined);
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const logoPayment = (evt: any) => {
 
@@ -52,6 +73,8 @@ export default function Pagamento() {
  
   };
 
+
+
   return (
     <>
       <Header />
@@ -60,7 +83,7 @@ export default function Pagamento() {
       </div>
 
       <div className="flex flex-col  w-1/2 justify-center mx-auto m-3 border p-2 rounded-md">
-        <form action="" className="flex flex-col w-full gap-2">
+        <form action=""  className="flex flex-col w-full gap-2">
           {/* NOME */}
           <div className="flex flex-row w-full gap-2 bx-inpt-txt  items-center p-2">
             <span className="inpt-label flex flex-row lg:w-1/6 md:h-1/4 justify-start items-center gap-1">
@@ -70,7 +93,7 @@ export default function Pagamento() {
             <input
               type="text"
               className="inpt-txt lg:w-full"
-              value={inputs.name}
+              value={inputs.designacao}
               onChange={(e) => setInputs({ ...inputs, designacao: e.target.value })}
               required
             />
@@ -172,6 +195,9 @@ export default function Pagamento() {
             ) }
           </div>
         </div>
+        <Elements stripe={stripePromise} >
+          <CheckoutForm/>
+        </Elements>
         {/* BOTAO DE PAGAMENTO */}
         <button
           className="flex justify-center items-center w-full mt-2
