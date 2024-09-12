@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./context/CarrinhoContext";
 import { CompraProvider } from "./context/CompraContext";
-
+import { ProdutoProvider } from "./context/ProdutoContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
+    <ProdutoProvider>
       <CartProvider>
         <CompraProvider>
           <html lang="en">
@@ -26,5 +26,6 @@ export default function RootLayout({
           </html>
         </CompraProvider>
       </CartProvider>
+    </ProdutoProvider>
   );
 }

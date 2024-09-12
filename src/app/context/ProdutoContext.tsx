@@ -27,6 +27,7 @@ type ProdutoContextData = {
   add: (produto: Produto) => void;
   getProdutoByID: (id: number) => void;
   editar: (prod: Produto) => void;
+  // produtoID: number  | undefined
 };
 
 export const ProdutoContext = createContext<ProdutoContextData>({
@@ -38,7 +39,7 @@ export const ProdutoContext = createContext<ProdutoContextData>({
     category: "",
     image: "",
   },
-
+  // produtoID: undefined,
   add: async (produto: Produto) => {},
   deletar: async (id: number) => {},
   getProdutoByID: async (id: number) => {},
@@ -47,6 +48,7 @@ export const ProdutoContext = createContext<ProdutoContextData>({
 
 export function ProdutoProvider({ children }: { children: ReactNode }) {
   const [produto, setProduto] = useState<Produto>();
+  const [produtoID, setProdutoID] = useState<Number | undefined>();
   const [response, setResponse] = useState<string>("");
 
   const api = setupApiClient();

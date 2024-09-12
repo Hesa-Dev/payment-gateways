@@ -235,7 +235,7 @@ export default function Carrinho() {
                       className="flex flex-col items-center justify-center  p-2 gap-2  w-1/4"
                     >
                       <p className="font-bold text-2xl text-slate-400">
-                        {item.nome}
+                        {item.name}
                       </p>
                       <p className="font-bold text-sm text-slate-400">
                         Em Stock

@@ -81,13 +81,12 @@ class ProdutoController {
     async addCarrinho(req: Request, res: Response) {
 
         const produtoService = new ProdutoService();
-        var ids = req.query.ids  // result ['1', '2', '3']
+        var ids = req.query.ids  // EX :. result ['1', '2', '3']
 
         if (ids) {
 
             if (Array.isArray(ids)) {
-
-                const idsArrays: any = ids.map(Number);
+                const idsArrays: any = ids.map(Number); // EX :. result [1,2,3]
                 // console.log("numberArray : ", idsArrays);
                 const sender = await produtoService.addCarrinho(idsArrays)
                 return res.json(sender)

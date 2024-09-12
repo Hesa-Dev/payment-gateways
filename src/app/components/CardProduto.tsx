@@ -13,7 +13,9 @@ import { FaChevronRight } from "react-icons/fa";
 import { FaChevronLeft } from "react-icons/fa";
 import Link from "next/link";
 import { CartContext } from "../context/CarrinhoContext";
+
 import setupApiClient from "../api/axios";
+import { ProdutoContext } from "../context/ProdutoContext";
 
 export default function Card() {
   const api = setupApiClient();
@@ -25,6 +27,9 @@ export default function Card() {
   const endOffset = itemOffset + totalPaginas;
   const currentItems = produto?.slice(itemOffset, endOffset);
   const { addItemCarrinho, carrinho, saveID } = useContext(CartContext);
+
+  const { getProdutoByID } = useContext(ProdutoContext);
+
 
   // const [carrinho, setCarrinho] = useState<typeof produtos[]>([]);
 
@@ -171,7 +176,7 @@ export default function Card() {
                   </div>
                   {/* ver produtos*/}
                   <Link
-                    href="produto"
+                    href={`/produto/${produto.id}`}
                     className="flex lg:flex-row lg:text-base border md:flex-col sm:flex-col border-slate-400  gap-2 p-2 
                   items-center justify-center  rounded-sm md:p-1 md:gap-2 sm:text-xs md:text-xs"
                   >

@@ -1,4 +1,4 @@
-
+"use client";
 import Card from "./CardProduto";
 
 export default function Produtos() {
